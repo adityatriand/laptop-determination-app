@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="{% static 'img/icon-laptop-logo.png' %}">
+  <title>Laptop Determination With AHP</title>
+
+  {% include "snippets/styles.html" %}
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+
+<!-- Navbar -->
+{% include "snippets/navbar.html" %}
+<!-- /.navbar -->
+
+<!-- Main Sidebar Container -->
+
+<!-- Sidebar Menu -->
+{% include "snippets/sidebar.html" %}
+<!-- End of Sidebar -->
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+
+<!-- Content Header (Page header) -->
+{% block content_header %}
+
+{% endblock content_header %}
+<!-- /.content-header -->
+
+<!-- Main content -->
+{% block content_main %}
+
+{% endblock content_main %}
+
+</div>
+<!-- /.content-wrapper -->
+
+{% include "snippets/footer.html" %}
+
+
+</div>
+<!-- ./wrapper -->
+
+{% include "snippets/scripts.html" %}
+
+</body>
+</html>
