@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content_header %}
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Data Alternatif</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Data Alternatif</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+{% endblock content_header %}
+
+{% block content_main %}
+<section class="content">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Berikut dataset laptop yang kami pakai untuk menentukan laptop mana yang sesuai dengan keinginan pengguna : </h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="table_dataset" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Brand</th>
+                <th>Nama Laptop</th>
+                <th>CPU</th>
+                <th>RAM</th>
+                <th>Harga</th>
+                <th>HDD</th>
+                <th>SSD</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for laptop in laptops %}
+              <tr>
+                <td>{{laptop.id_laptop }}</td>
+                <td>{{laptop.company}}</td>
+                <td>{{laptop.product}}</td>
+                <td>{{laptop.cpu}} GHz</td>
+                <td>{{laptop.ram}} GB</td>
+                <td>Rp. {{laptop.harga}}</td>
+                <td>{% widthratio laptop.hdd 1 1000 %} GB</td>
+                <td>{% widthratio laptop.ssd 1 1000 %} GB</td>
+              </tr>
+              {% endfor %}     
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content_main %}
+
