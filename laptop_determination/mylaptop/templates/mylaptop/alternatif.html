@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load mylaptop_extras %}
 
 {% block content_header %}
 <section class="content-header">
@@ -50,9 +51,9 @@
                 <td>{{laptop.product}}</td>
                 <td>{{laptop.cpu}} GHz</td>
                 <td>{{laptop.ram}} GB</td>
-                <td>Rp. {{laptop.harga}}</td>
-                <td>{% widthratio laptop.hdd 1 1000 %} GB</td>
-                <td>{% widthratio laptop.ssd 1 1000 %} GB</td>
+                <td>{{laptop.harga}}</td>
+                <td>{{ laptop.hdd|konversiMemori }} GB</td>
+                <td>{{ laptop.ssd|konversiMemori }} GB</td>
               </tr>
               {% endfor %}     
             </tbody>
