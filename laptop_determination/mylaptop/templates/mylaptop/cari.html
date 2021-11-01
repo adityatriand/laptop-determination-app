@@ -27,9 +27,11 @@
 
           <div class="card-header">
             <h3 class="card-title">Form Persiapan Cari Laptop</h3>
+            {{cari.penting1}}
           </div>
 
-          <form>
+          <form method="POST" action="/mylaptop/hasil/">
+            {% csrf_token %}
           <div class="card-body">
             <div class="row justify-content-center">
               <div class="col-md-6">
@@ -38,7 +40,8 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Brand Favorit Pilihan</label>
-                  <select class="form-control select2bs4" style="width: 100%;">
+                  <select class="form-control select2bs4" name="brand" style="width: 100%;">
+                    <option value="Semua">Semua Brand</option>
                     {% for brand in brands  %}
                       <option value="{{brand.company}}" >{{brand.company}}</option>
                     {% endfor %}
@@ -49,7 +52,7 @@
             <div class="dropdown-divider"></div>
             <div class="row justify-content-center">
               <div class="col-md-6 text-cari">
-                <p>Kami menyediakan form untuk mengisi ranking untuk tingkat kepentingan. Ranking yang dimaksud disini adalah Anda dapat mengurutkan beberapa kriteria di atas sesuai dengan kebutuhan dan keinginan Anda. Contoh: Anda lebih mementingkan harga dibandingkan besar ukuran RAM. Jadi Anda bisa memilih harga sebagai kriteria urutan pertama. Urutan selanjutnya diikuti kepentingan kriteria sesuai keinginan Anda.</p>
+                <p>Kami menyediakan form untuk mengisi ranking untuk tingkat kepentingan. Ranking yang dimaksud disini adalah Anda dapat mengurutkan beberapa kriteria di atas sesuai dengan kebutuhan dan keinginan Anda. <br><br> Contoh: Anda lebih mementingkan harga dibandingkan besar ukuran RAM. Jadi Anda bisa memilih harga sebagai kriteria urutan pertama. Urutan selanjutnya diikuti kepentingan kriteria sesuai keinginan Anda.</p>
                 <ul>
                   <li>CPU</li>
                   Mendukung pemrosesan data. Semakin tinggi nilai semakin baik
@@ -66,20 +69,23 @@
               <div class="col-md-6">
                 <div class="form-group">
                   {% for criteria in criterias %}
-                    {% if forloop.counter == 1 %}
-                    <label>Kepentingan {{forloop.counter}}</label>
-                    {% else %}
-                    <label class="m-t-20">Kepentingan {{forloop.counter}}</label>
-                    {% endif %}
-                    <select class="form-control select2bs4" style="width: 100%;" id="penting_{{forloop.counter}}">
-                    {% for kriteria in criterias %}
+                    {% if forloop.counter != 6 %}
                       {% if forloop.counter == 1 %}
-                      <option value="null">{{kriteria}}</option>
+                      <label>Kepentingan {{forloop.counter}}</label>
                       {% else %}
-                      <option value="{{kriteria}}">{{kriteria}}</option>
-                      {% endif %}                     
-                    {% endfor %}
-                    </select>
+                      <label class="m-t-10">Kepentingan {{forloop.counter}}</label>
+                      {% endif %}
+                      <select class="form-control select2bs4" style="width: 100%;" id="penting_{{forloop.counter}}" aria-describedby="penting" name="penting_{{forloop.counter}}">
+                      {% for kriteria in criterias %}
+                        {% if forloop.counter == 1 %}
+                        <option value="kosong">{{kriteria}}</option>
+                        {% else %}
+                        <option value="{{kriteria}}">{{kriteria}}</option>
+                        {% endif %}                     
+                      {% endfor %}
+                      </select>
+                      <small id="penting" class="form-text text-muted">Pilih "Default" untuk mereset pilihan</small>
+                    {% endif %}
                   {% endfor %}
                 </div>
               </div>
@@ -88,7 +94,7 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-custom">Cari Laptop</button>
-            <button type="button" class="btn btn-default float-right">Reset Pengaturan</button>
+            <button type="button" class="btn btn-default float-right" id="reset_penting">Reset Pengaturan</button>
           </div>
 
          </form>

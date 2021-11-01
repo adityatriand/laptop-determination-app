@@ -24,9 +24,14 @@ $.widget.bridge('uibutton', $.ui.button)
 	      theme: 'bootstrap4'
 	    })
 
-		var temp = $('#penting_1').val();
+		var temp1 = $('#penting_1').val();
+		var temp2 = $('#penting_2').val();
+		var temp3 = $('#penting_3').val();
+		var temp4 = $('#penting_4').val();
+		var temp5 = $('#penting_5').val();
 	    function UpdateOption(tanda,pilihan){
-	    	if(pilihan != null){
+	    	var temp = [temp1,temp2,temp3,temp4,temp5];
+	    	if(pilihan != "kosong"){
 	    		for(var i=1;i<=5;i++){
 	    			if(i==tanda)continue;
 	    			else{
@@ -34,13 +39,51 @@ $.widget.bridge('uibutton', $.ui.button)
 	    			}
 	    		}
 	    	}
+	    	else{
+	    		var opsi = "<option value='"+temp[(tanda-1)]+"'>"+temp[(tanda-1)]+"</option>";
+	    		for(var i=1;i<=5;i++){
+	    			if(i==tanda)continue;
+	    			else{
+	    				$("#penting_"+i).append(opsi);
+	    			}
+	    		}
+	    	}
 	    }
 
-	    // $('#penting_1').change(function(){
-	    // 	var tanda = 1;
-	    // 	var data = $(this).val();
-	    // 	if(data==null || data=='') temp =
-	    // 	UpdateOption(tanda,data);
-	    // })
+	    $('#penting_1').change(function(){
+	    	var tanda = 1;
+	    	var data = $(this).val();
+	    	if(data!="kosong") temp1 = data;
+	    	UpdateOption(tanda,data);
+	    })
+	    $('#penting_2').change(function(){
+	    	var tanda = 2;
+	    	var data = $(this).val();
+	    	if(data!="kosong") temp2 = data;
+	    	UpdateOption(tanda,data);
+	    })
+	    $('#penting_3').change(function(){
+	    	var tanda = 3;
+	    	var data = $(this).val();
+	    	if(data!="kosong") temp3 = data;
+	    	UpdateOption(tanda,data);
+	    })
+	    $('#penting_4').change(function(){
+	    	var tanda = 4;
+	    	var data = $(this).val();
+	    	if(data!="kosong") temp4 = data;
+	    	UpdateOption(tanda,data);
+	    })
+	    $('#penting_5').change(function(){
+	    	var tanda = 5;
+	    	var data = $(this).val();
+	    	if(data!="kosong") temp5 = data;
+	    	UpdateOption(tanda,data);
+	    })
+
+	    $('#reset_penting').click(function(){
+	    	location.reload();
+	    })
+	    
 	})
 </script>
