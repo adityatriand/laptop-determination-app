@@ -1,0 +1,22 @@
+:root{
+    --col_hijau_tua: #125C13;
+    --col_hijau_muda: #3E7C17;
+    --col_kuning: #F4A442;
+    --col_abu_abu: #E8E1D9;
+}
+
+.background_hijau{
+    background-color: var(--col_hijau_tua);
+}
+
+.background_hijau_muda{
+    background-color: var(--col_hijau_muda);
+}
+
+.background_kuning{
+    background-color: var(--col_kuning);
+}
+
+.background_abu_abu{
+    background-color: var(--col_abu_abu);
+}
