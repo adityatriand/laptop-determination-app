@@ -8,30 +8,39 @@ $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
 <script src=" {% static 'vendor/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- ChartJS -->
-<script src=" {% static 'vendor/plugins/chart.js/Chart.min.js' %}"></script>
-<!-- Sparkline -->
-<script src=" {% static 'vendor/plugins/sparklines/sparkline.js' %}"></script>
-<!-- daterangepicker -->
-<script src=" {% static 'vendor/plugins/moment/moment.min.js' %} "></script>
-<script src=" {% static 'vendor/plugins/daterangepicker/daterangepicker.js' %} "></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src=" {% static 'vendor/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %} "></script>
-<!-- Summernote -->
-<script src=" {% static 'vendor/plugins/summernote/summernote-bs4.min.js' %} "></script>
 <!-- overlayScrollbars -->
 <script src=" {% static 'vendor/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %} "></script>
 <!-- AdminLTE App -->
 <script src=" {% static 'vendor/dist/js/adminlte.js' %} "></script>
-<!-- AdminLTE for demo purposes -->
-<script src=" {% static 'vendor/dist/js/demo.js' %} "></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src=" {% static 'vendor/dist/js/pages/dashboard.js' %} "></script>
+<!-- Select2 -->
+<script src="{% static 'vendor/plugins/select2/js/select2.full.min.js' %}"></script>
 
 <script src="{% static 'vendor/plugins/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'vendor/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 <script>
 	$(document).ready(function(){
 		$('#table_dataset').DataTable()
+		$('.select2bs4').select2({
+	      theme: 'bootstrap4'
+	    })
+
+		var temp = $('#penting_1').val();
+	    function UpdateOption(tanda,pilihan){
+	    	if(pilihan != null){
+	    		for(var i=1;i<=5;i++){
+	    			if(i==tanda)continue;
+	    			else{
+	    				$("#penting_"+i+" option[value='"+pilihan+"']").remove();
+	    			}
+	    		}
+	    	}
+	    }
+
+	    // $('#penting_1').change(function(){
+	    // 	var tanda = 1;
+	    // 	var data = $(this).val();
+	    // 	if(data==null || data=='') temp =
+	    // 	UpdateOption(tanda,data);
+	    // })
 	})
 </script>
