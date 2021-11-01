@@ -21,7 +21,15 @@
 {% block content_main %}
 <section class="content">
   <div class="container-fluid">
-    Ini adalah hasil penentuan
+    <p>Ini adalah brand yang dipilih : {{cari.brand}} </p>
+    <p>Ini adalah tingkat kepentingan : </p>
+    <ol> 
+      <li>{{cari.penting1}}</li>
+      <li>{{cari.penting2}}</li>
+      <li>{{cari.penting3}}</li>
+      <li>{{cari.penting4}}</li>
+      <li>{{cari.penting5}}</li>
+    </ol>
   </div>
 </section>
 {% endblock content_main %}
