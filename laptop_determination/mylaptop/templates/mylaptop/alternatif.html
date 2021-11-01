@@ -31,9 +31,9 @@
         <!-- /.card-header -->
         <div class="card-body">
           <table id="table_dataset" class="table table-bordered table-hover">
-            <thead>
+            <thead class="background-hijau-muda text-center" style="color:white;">
               <tr>
-                <th>No</th>
+                <th>ID</th>
                 <th>Brand</th>
                 <th>Nama Laptop</th>
                 <th>CPU (GHz)</th>
@@ -49,11 +49,11 @@
                 <td>{{laptop.id_laptop }}</td>
                 <td>{{laptop.company}}</td>
                 <td>{{laptop.product}}</td>
-                <td>{{laptop.cpu}}</td>
-                <td>{{laptop.ram}}</td>
-                <td>{{laptop.harga}}</td>
-                <td>{{ laptop.hdd|konversiMemori }}</td>
-                <td>{{ laptop.ssd|konversiMemori }}</td>
+                <td class="text-right">{{laptop.cpu}}</td>
+                <td class="text-right">{{laptop.ram}}</td>
+                <td class="text-right">{{laptop.harga}}</td>
+                <td class="text-right">{{ laptop.hdd|konversiMemori }}</td>
+                <td class="text-right">{{ laptop.ssd|konversiMemori }}</td>
               </tr>
               {% endfor %}     
             </tbody>

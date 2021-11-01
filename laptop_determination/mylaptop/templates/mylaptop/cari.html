@@ -21,7 +21,81 @@
 {% block content_main %}
 <section class="content">
   <div class="container-fluid">
-    Ini adalah menu cari laptop
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+
+          <div class="card-header">
+            <h3 class="card-title">Form Persiapan Cari Laptop</h3>
+          </div>
+
+          <form>
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <p class="text-cari">Jika Anda menginginkan sebuah brand tertentu maka silahkan pilih nama brand laptop disamping sesuai dengan keinginan. Sistem akan mencari pilihan laptop sesuai dengan brand yang sudah diinputkan.</p>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Brand Favorit Pilihan</label>
+                  <select class="form-control select2bs4" style="width: 100%;">
+                    {% for brand in brands  %}
+                      <option value="{{brand.company}}" >{{brand.company}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="row justify-content-center">
+              <div class="col-md-6 text-cari">
+                <p>Kami menyediakan form untuk mengisi ranking untuk tingkat kepentingan. Ranking yang dimaksud disini adalah Anda dapat mengurutkan beberapa kriteria di atas sesuai dengan kebutuhan dan keinginan Anda. Contoh: Anda lebih mementingkan harga dibandingkan besar ukuran RAM. Jadi Anda bisa memilih harga sebagai kriteria urutan pertama. Urutan selanjutnya diikuti kepentingan kriteria sesuai keinginan Anda.</p>
+                <ul>
+                  <li>CPU</li>
+                  Mendukung pemrosesan data. Semakin tinggi nilai semakin baik
+                  <li>RAM</li>
+                  Untuk mempercepat pemrosesan data pada perangkat. Semakin tinggi nilai semakin baik
+                  <li>Harga</li>
+                  Semakin kecil nilai semakin baik
+                  <li>SSD</li>
+                  Penyimpanan Laptop (lebih baik dari HDD). Semakin tinggi nilai semakin baik
+                  <li>HDD</li>
+                  Penyimpanan Laptop. Semakin tinggi nilai semakin baik
+                </ul>             
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  {% for criteria in criterias %}
+                    {% if forloop.counter == 1 %}
+                    <label>Kepentingan {{forloop.counter}}</label>
+                    {% else %}
+                    <label class="m-t-20">Kepentingan {{forloop.counter}}</label>
+                    {% endif %}
+                    <select class="form-control select2bs4" style="width: 100%;" id="penting_{{forloop.counter}}">
+                    {% for kriteria in criterias %}
+                      {% if forloop.counter == 1 %}
+                      <option value="null">{{kriteria}}</option>
+                      {% else %}
+                      <option value="{{kriteria}}">{{kriteria}}</option>
+                      {% endif %}                     
+                    {% endfor %}
+                    </select>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-custom">Cari Laptop</button>
+            <button type="button" class="btn btn-default float-right">Reset Pengaturan</button>
+          </div>
+
+         </form>
+      </div>  
+    </div>
+
+    </div>
   </div>
 </section>
 {% endblock content_main %}
