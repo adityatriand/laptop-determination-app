@@ -36,11 +36,11 @@
                 <th>No</th>
                 <th>Brand</th>
                 <th>Nama Laptop</th>
-                <th>CPU</th>
-                <th>RAM</th>
-                <th>Harga</th>
-                <th>HDD</th>
-                <th>SSD</th>
+                <th>CPU (GHz)</th>
+                <th>RAM (GB)</th>
+                <th>Harga (Rp)</th>
+                <th>HDD (GB)</th>
+                <th>SSD (GB)</th>
               </tr>
             </thead>
             <tbody>
@@ -49,11 +49,11 @@
                 <td>{{laptop.id_laptop }}</td>
                 <td>{{laptop.company}}</td>
                 <td>{{laptop.product}}</td>
-                <td>{{laptop.cpu}} GHz</td>
-                <td>{{laptop.ram}} GB</td>
+                <td>{{laptop.cpu}}</td>
+                <td>{{laptop.ram}}</td>
                 <td>{{laptop.harga}}</td>
-                <td>{{ laptop.hdd|konversiMemori }} GB</td>
-                <td>{{ laptop.ssd|konversiMemori }} GB</td>
+                <td>{{ laptop.hdd|konversiMemori }}</td>
+                <td>{{ laptop.ssd|konversiMemori }}</td>
               </tr>
               {% endfor %}     
             </tbody>
