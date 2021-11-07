@@ -85,5 +85,18 @@ $.widget.bridge('uibutton', $.ui.button)
 	    	location.reload();
 	    })
 	    
+	    $('#perhitungan').click(function(){
+	    	var tanda = $('#detail_perhitungan').attr('tanda')
+	    	if(tanda == '0'){
+	    		$('#detail_perhitungan').attr('tanda','1')
+		    	$("#detail_perhitungan").css("display","block");
+		    	$("#perhitungan").html('Sembunyikan Perhitungan');	
+	    	}else{
+	    		$('#detail_perhitungan').attr('tanda','0')
+	    		$("#detail_perhitungan").css("display","none");
+		    	$("#perhitungan").html('Lihat Perhitungan');
+	    	}
+	    })
+
 	})
 </script>

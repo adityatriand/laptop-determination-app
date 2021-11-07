@@ -30,12 +30,15 @@ def cari(request):
     return render(request, 'mylaptop/cari.html', context)
 
 def hasil(request):
-
+    default = ['HARGA','RAM','SSD','HDD','CPU']
     data = {}
     if request.method == 'POST':
         data['brand'] = request.POST['brand']
         for i in range(5):
-            data['penting'+str(i+1)] = request.POST['penting_'+str(i+1)]
+            if(request.POST['penting_'+str(i+1)]=='kosong'):
+                data['penting'+str(i+1)] = default[i]
+            else:
+                data['penting'+str(i+1)] = request.POST['penting_'+str(i+1)]
 
         context = {
             'cari': data
@@ -45,3 +48,4 @@ def hasil(request):
 
     else:
         return HttpResponseRedirect('/mylaptop/cari/')
+        # return render(request, 'mylaptop/hasil.html')
