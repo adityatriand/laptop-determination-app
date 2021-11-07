@@ -21,15 +21,102 @@
 {% block content_main %}
 <section class="content">
   <div class="container-fluid">
-    <p>Ini adalah brand yang dipilih : {{cari.brand}} </p>
-    <p>Ini adalah tingkat kepentingan : </p>
-    <ol> 
-      <li>{{cari.penting1}}</li>
-      <li>{{cari.penting2}}</li>
-      <li>{{cari.penting3}}</li>
-      <li>{{cari.penting4}}</li>
-      <li>{{cari.penting5}}</li>
-    </ol>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          
+          <div class="card-header">
+            <h3 class="card-title">Hasil Perhitungan</h3>
+          </div>
+
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <p>Berikut 5 laptop teratas yang kami rekomendasikan dengan keinginan anda</p>
+              </div>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Brand</th>
+                    <th>Nama Laptop</th>
+                    <th>CPU</th>
+                    <th>Harga</th>
+                    <th>RAM</th>
+                    <th>SSD</th>
+                    <th>HDD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Pakaikan perulangan disini -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button type="button" class="btn btn-custom" id="perhitungan">Lihat perhitungan</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="display:none;" id="detail_perhitungan" tanda='0'>
+
+      <div class="col-12">
+        <div class="card">
+          
+          <div class="card-header">
+            <h3 class="card-title">Detail Perhitungan</h3>
+          </div>
+
+          <div class="card-body">
+
+            <div class="row text-center m-b-30">
+              <div class="col-12">
+                <p class="title-hitung">Hierarki AHP</p>
+              </div>
+              
+              {% include "detail/hierarki.html" %}
+
+            </div>
+
+            <div class="row text-center m-b-30">
+              <div class="col-12">
+                <p class="title-hitung">Penentuan Weights (W) atau priority vector dari kriteria</p>
+              </div>
+              
+              {% include "detail/kriteria_cpu.html" %}
+
+              {% include "detail/kriteria_harga.html" %}
+
+              {% include "detail/kriteria_ram.html" %}
+
+              {% include "detail/kriteria_ssd.html" %}
+
+              {% include "detail/kriteria_hdd.html" %}
+
+              {% include "detail/kriteria_kriteria.html" %}
+
+            </div>
+
+            <div class="row text-center m-b-30">
+              <div class="col-12">
+                <p class="title-hitung">Perangkingan Tiap Alternatif</p>
+              </div>
+              
+              {% include "detail/perankingan.html" %}
+
+            </div>
+
+          </div>
+        </div>    
+      </div>
+
+    </div>
+
   </div>
 </section>
 {% endblock content_main %}

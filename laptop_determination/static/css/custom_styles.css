@@ -93,3 +93,10 @@ a{
     padding: 0 10px;
     text-align: justify;
 }
+
+.title-hitung{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: var(--col_kuning);
+}
