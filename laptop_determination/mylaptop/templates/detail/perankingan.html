@@ -1,42 +1,39 @@
+{% load mylaptop_extras %}
 <table class="table table-bordered">
   <caption style="caption-side:top;">Perangkingan</caption>
   <thead>
     <tr>
       <th>Bobot Gabungan Secara Keseluruhan</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
       <th>Bobot Kriteria</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in rangking %}
     <tr>
-      <td>Nama Kriteria</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.pilihan }}</td>
+      <td>{{ data|formatWeight0 }}</td>
+      <td>{{ data|formatWeight1 }}</td>
+      <td>{{ data|formatWeight2 }}</td>
+      <td>{{ data|formatWeight3 }}</td>
+      <td>{{ data|formatWeight4 }}</td>
+      <td>{{ data.bobot }}</td>
     </tr>
+    {% endfor %}
     <tr>
       <td>Perangkingan</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      {% for data in rangking_alternatif %}
+      <td>{{ data.rangking|formatFloat }}</td>
+      {% endfor %}
       <td></td>
     </tr>
     <tr>
       <td></td>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>5</td>
+      {% for data in rangking_alternatif %}
+      <td>{{ data.rank }}</td>
+      {% endfor %}
       <td></td>
     </tr>
   </tbody>

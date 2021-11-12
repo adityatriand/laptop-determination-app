@@ -1,25 +1,26 @@
+{% load mylaptop_extras %}
 <h5>Kriteria HDD</h5>
 <table class="table table-bordered">
   <caption style="caption-side:top;">Tingkat Kepentingan lalu Pairwaise Comparison</caption>
   <thead>
     <tr>
       <th>HDD</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.hdd.awal.0 }}</td>
+      <td>{{ data.hdd.awal.1 }}</td>
+      <td>{{ data.hdd.awal.2 }}</td>
+      <td>{{ data.hdd.awal.3 }}</td>
+      <td>{{ data.hdd.awal.4 }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -27,24 +28,24 @@
   <thead>
     <tr>
       <th>HDD</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
       <th>Weights (W)</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.hdd.normalisasi.0|formatFloat }}</td>
+      <td>{{ data.hdd.normalisasi.1|formatFloat }}</td>
+      <td>{{ data.hdd.normalisasi.2|formatFloat }}</td>
+      <td>{{ data.hdd.normalisasi.3|formatFloat }}</td>
+      <td>{{ data.hdd.normalisasi.4|formatFloat }}</td>
+      <td>{{ data.hdd.weight }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -52,26 +53,26 @@
   <thead>
     <tr>
       <th>HDD</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
       <th>WSV</th>
       <th>CV</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.hdd.terbobot.0|formatFloat }}</td>
+      <td>{{ data.hdd.terbobot.1|formatFloat }}</td>
+      <td>{{ data.hdd.terbobot.2|formatFloat }}</td>
+      <td>{{ data.hdd.terbobot.3|formatFloat }}</td>
+      <td>{{ data.hdd.terbobot.4|formatFloat }}</td>
+      <td>{{ data.hdd.wsv }}</td>
+      <td>{{ data.hdd.cv }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -79,39 +80,39 @@
   <thead>
     <tr>
       <th>HDD</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
       <th>Weight (W)</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.hdd.awal.0|formatFloat }}</td>
+      <td>{{ data.hdd.awal.1|formatFloat }}</td>
+      <td>{{ data.hdd.awal.2|formatFloat }}</td>
+      <td>{{ data.hdd.awal.3|formatFloat }}</td>
+      <td>{{ data.hdd.awal.4|formatFloat }}</td>
+      <td>{{ data.hdd.weight }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
  <table class="table table-bordered">
   <tbody>
     <tr>
       <td>Lambda Max</td>
-      <td>0</td>
+      <td>{{ alternatif.0.hdd.lambda_max }}</td>
     </tr>
     <tr>
       <td>Consistency Index (CI)</td>
-      <td>0</td>
+      <td>{{ alternatif.0.hdd.ci }}</td>
     </tr>
     <tr>
       <td>Consistency Ration (CR)</td>
-      <td>0</td>
+      <td>{{ alternatif.0.hdd.cr }}</td>
     </tr>
   </tbody>
 </table>
