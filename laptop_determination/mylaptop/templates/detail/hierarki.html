@@ -1,3 +1,4 @@
+{% load mylaptop_extras %}
 <table class="table table-bordered">
   <caption style="caption-side:top;">Tujuan</caption>
   <thead>
@@ -22,11 +23,15 @@
   <caption style="caption-side:top;">Alternatif</caption>
   <thead>
     <tr>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      <!--{# {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %} #}-->
+
+      <th>{{ alternatif.0.obj.product }}</th>
+      <th>{{ alternatif.1.obj.product }}</th>
+      <th>{{ alternatif.2.obj.product }}</th>
+      <th>{{ alternatif.3.obj.product }}</th>
+      <th>{{ alternatif.4.obj.product }}</th>
     </tr>
   </thead>
 </table>

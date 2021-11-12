@@ -1,25 +1,26 @@
+{% load mylaptop_extras %}
 <h5>Kriteria KRITERIA</h5>
 <table class="table table-bordered">
   <caption style="caption-side:top;">Tingkat Kepentingan lalu Pairwaise Comparison</caption>
   <thead>
     <tr>
       <th>KRITERIA</th>
-      <th>{{cari.penting1}}</th>
-      <th>{{cari.penting2}}</th>
-      <th>{{cari.penting3}}</th>
-      <th>{{cari.penting4}}</th>
-      <th>{{cari.penting5}}</th>
+      {% for data in cari %}
+      <th>{{data.obj.pilihan}}</th>
+      {% endfor %}
     </tr>
   </thead>
   <tbody>
+    {% for data in cari %}
     <tr>
-      <td>Nama Kriteria</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{data.obj.pilihan}}</td>
+      <td>{{data|formatKriteria0:"awal"}}</td>
+      <td>{{data|formatKriteria1:"awal"}}</td>
+      <td>{{data|formatKriteria2:"awal"}}</td>
+      <td>{{data|formatKriteria3:"awal"}}</td>
+      <td>{{data|formatKriteria4:"awal"}}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -27,24 +28,24 @@
   <thead>
     <tr>
       <th>KRITERIA</th>
-      <th>{{cari.penting1}}</th>
-      <th>{{cari.penting2}}</th>
-      <th>{{cari.penting3}}</th>
-      <th>{{cari.penting4}}</th>
-      <th>{{cari.penting5}}</th>
+      {% for data in cari %}
+      <th>{{data.obj.pilihan}}</th>
+      {% endfor %}
       <th>Weights (W)</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in cari %}
     <tr>
-      <td>Nama Kriteria</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{data.obj.pilihan}}</td>
+      <td>{{data|formatKriteria0:"normalisasi"}}</td>
+      <td>{{data|formatKriteria1:"normalisasi"}}</td>
+      <td>{{data|formatKriteria2:"normalisasi"}}</td>
+      <td>{{data|formatKriteria3:"normalisasi"}}</td>
+      <td>{{data|formatKriteria4:"normalisasi"}}</td>
+      <td>{{data|formatKriteriaVariabel:"weight"}}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -52,26 +53,26 @@
   <thead>
     <tr>
       <th>KRITERIA</th>
-      <th>{{cari.penting1}}</th>
-      <th>{{cari.penting2}}</th>
-      <th>{{cari.penting3}}</th>
-      <th>{{cari.penting4}}</th>
-      <th>{{cari.penting5}}</th>
+      {% for data in cari %}
+      <th>{{data.obj.pilihan}}</th>
+      {% endfor %}
       <th>WSV</th>
       <th>CV</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in cari %}
     <tr>
-      <td>Nama Kriteria</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{data.obj.pilihan}}</td>
+      <td>{{data|formatKriteria0:"normalisasi"}}</td>
+      <td>{{data|formatKriteria1:"normalisasi"}}</td>
+      <td>{{data|formatKriteria2:"normalisasi"}}</td>
+      <td>{{data|formatKriteria3:"normalisasi"}}</td>
+      <td>{{data|formatKriteria4:"normalisasi"}}</td>
+      <td>{{data|formatKriteriaVariabel:"wsv"}}</td>
+      <td>{{data|formatKriteriaVariabel:"cv"}}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -79,39 +80,39 @@
   <thead>
     <tr>
       <th>KRITERIA</th>
-      <th>{{cari.penting1}}</th>
-      <th>{{cari.penting2}}</th>
-      <th>{{cari.penting3}}</th>
-      <th>{{cari.penting4}}</th>
-      <th>{{cari.penting5}}</th>
+      {% for data in cari %}
+      <th>{{data.obj.pilihan}}</th>
+      {% endfor %}
       <th>Weigth (W)</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in cari %}
     <tr>
-      <td>Nama Kriteria</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{data.obj.pilihan}}</td>
+      <td>{{data|formatKriteria0:"normalisasi"}}</td>
+      <td>{{data|formatKriteria1:"normalisasi"}}</td>
+      <td>{{data|formatKriteria2:"normalisasi"}}</td>
+      <td>{{data|formatKriteria3:"normalisasi"}}</td>
+      <td>{{data|formatKriteria4:"normalisasi"}}</td>
+      <td>{{data|formatKriteriaVariabel:"weight"}}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
  <table class="table table-bordered">
   <tbody>
     <tr>
       <td>Lambda Max</td>
-      <td>0</td>
+      <td>{{cari.0|formatKriteriaVariabel:"lambda_max"}}</td>
     </tr>
     <tr>
       <td>Consistency Index (CI)</td>
-      <td>0</td>
+      <td>{{cari.0|formatKriteriaVariabel:"ci"}}</td>
     </tr>
     <tr>
       <td>Consistency Ration (CR)</td>
-      <td>0</td>
+      <td>{{cari.0|formatKriteriaVariabel:"cr"}}</td>
     </tr>
   </tbody>
 </table>

@@ -1,0 +1,6 @@
+1. belum dinamis dengan jumlah n yang banyak
+2. tabel CI berdasarkan n blm di implementasikan
+3. belum masukan hasil rank ke atas
+4. tingkat kepentingan belum otomatis
+5. merapikan code
+6. belum dinamis pada template (contoh line 16 kriteria_harga.html)

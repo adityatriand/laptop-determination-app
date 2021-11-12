@@ -1,25 +1,26 @@
+{% load mylaptop_extras %}
 <h5>Kriteria Harga</h5>
 <table class="table table-bordered">
   <caption style="caption-side:top;">Tingkat Kepentingan lalu Pairwaise Comparison</caption>
   <thead>
     <tr>
       <th>Harga</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.harga.awal.0 }}</td>
+      <td>{{ data.harga.awal.1 }}</td>
+      <td>{{ data.harga.awal.2 }}</td>
+      <td>{{ data.harga.awal.3 }}</td>
+      <td>{{ data.harga.awal.4 }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -27,24 +28,24 @@
   <thead>
     <tr>
       <th>Harga</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
       <th>Weights (W)</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.harga.normalisasi.0|formatFloat }}</td>
+      <td>{{ data.harga.normalisasi.1|formatFloat }}</td>
+      <td>{{ data.harga.normalisasi.2|formatFloat }}</td>
+      <td>{{ data.harga.normalisasi.3|formatFloat }}</td>
+      <td>{{ data.harga.normalisasi.4|formatFloat }}</td>
+      <td>{{ data.harga.weight }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -52,26 +53,26 @@
   <thead>
     <tr>
       <th>Harga</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
       <th>WSV</th>
       <th>CV</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.harga.terbobot.0|formatFloat }}</td>
+      <td>{{ data.harga.terbobot.1|formatFloat }}</td>
+      <td>{{ data.harga.terbobot.2|formatFloat }}</td>
+      <td>{{ data.harga.terbobot.3|formatFloat }}</td>
+      <td>{{ data.harga.terbobot.4|formatFloat }}</td>
+      <td>{{ data.harga.wsv }}</td>
+      <td>{{ data.harga.cv }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 <table class="table table-bordered">
@@ -79,39 +80,39 @@
   <thead>
     <tr>
       <th>Harga</th>
-      <th>Nama Laptop 1</th>
-      <th>Nama Laptop 2</th>
-      <th>Nama Laptop 3</th>
-      <th>Nama Laptop 4</th>
-      <th>Nama Laptop 5</th>
+      {% for data in alternatif %}
+      <th>{{ data.obj.product }}</th>
+      {% endfor %}
       <th>Weight (W)</th>
     </tr>
   </thead>
   <tbody>
+    {% for data in alternatif %}
     <tr>
-      <td>Nama Laptop</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ data.obj.product }}</td>
+      <td>{{ data.harga.awal.0|formatFloat }}</td>
+      <td>{{ data.harga.awal.1|formatFloat }}</td>
+      <td>{{ data.harga.awal.2|formatFloat }}</td>
+      <td>{{ data.harga.awal.3|formatFloat }}</td>
+      <td>{{ data.harga.awal.4|formatFloat }}</td>
+      <td>{{ data.harga.weight }}</td>
     </tr>
+    {% endfor %}
   </tbody>
 </table>
  <table class="table table-bordered">
   <tbody>
     <tr>
       <td>Lambda Max</td>
-      <td>0</td>
+      <td>{{ alternatif.0.harga.lambda_max }}</td>
     </tr>
     <tr>
       <td>Consistency Index (CI)</td>
-      <td>0</td>
+      <td>{{ alternatif.0.harga.ci }}</td>
     </tr>
     <tr>
       <td>Consistency Ration (CR)</td>
-      <td>0</td>
+      <td>{{ alternatif.0.harga.cr }}</td>
     </tr>
   </tbody>
 </table>
