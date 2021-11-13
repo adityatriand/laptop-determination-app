@@ -6,7 +6,7 @@
     <tr>
       <th>CPU</th>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
+        <th>{{ data.obj.product }}</th>
       {% endfor %}
     </tr>
   </thead>
@@ -14,11 +14,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.cpu.awal.0 }}</td>
-      <td>{{ data.cpu.awal.1 }}</td>
-      <td>{{ data.cpu.awal.2 }}</td>
-      <td>{{ data.cpu.awal.3 }}</td>
-      <td>{{ data.cpu.awal.4 }}</td>
+
+      {% for data2 in data.cpu.awal %}
+        <td>{{ data2 }}</td>
+      {% endfor %}
+
     </tr>
     {% endfor %}
   </tbody>
@@ -28,9 +28,11 @@
   <thead>
     <tr>
       <th>CPU</th>
+
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
+        <th>{{ data.obj.product }}</th>
       {% endfor %}
+
       <th>Weights (W)</th>
     </tr>
   </thead>
@@ -38,11 +40,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.cpu.normalisasi.0|formatFloat }}</td>
-      <td>{{ data.cpu.normalisasi.1|formatFloat }}</td>
-      <td>{{ data.cpu.normalisasi.2|formatFloat }}</td>
-      <td>{{ data.cpu.normalisasi.3|formatFloat }}</td>
-      <td>{{ data.cpu.normalisasi.4|formatFloat }}</td>
+
+      {% for data2 in data.cpu.normalisasi %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.cpu.weight }}</td>
     </tr>
     {% endfor %}
@@ -53,9 +55,11 @@
   <thead>
     <tr>
       <th>CPU</th>
+
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
+        <th>{{ data.obj.product }}</th>
       {% endfor %}
+
       <th>WSV</th>
       <th>CV</th>
     </tr>
@@ -64,11 +68,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.cpu.terbobot.0|formatFloat }}</td>
-      <td>{{ data.cpu.terbobot.1|formatFloat }}</td>
-      <td>{{ data.cpu.terbobot.2|formatFloat }}</td>
-      <td>{{ data.cpu.terbobot.3|formatFloat }}</td>
-      <td>{{ data.cpu.terbobot.4|formatFloat }}</td>
+
+      {% for data2 in data.cpu.terbobot %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.cpu.wsv }}</td>
       <td>{{ data.cpu.cv }}</td>
     </tr>
@@ -81,7 +85,7 @@
     <tr>
       <th>CPU</th>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
+        <th>{{ data.obj.product }}</th>
       {% endfor %}
       <th>Weight (W)</th>
     </tr>
@@ -90,11 +94,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.cpu.awal.0|formatFloat }}</td>
-      <td>{{ data.cpu.awal.1|formatFloat }}</td>
-      <td>{{ data.cpu.awal.2|formatFloat }}</td>
-      <td>{{ data.cpu.awal.3|formatFloat }}</td>
-      <td>{{ data.cpu.awal.4|formatFloat }}</td>
+
+      {% for data2 in data.cpu.awal %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+      
       <td>{{ data.cpu.weight }}</td>
     </tr>
     {% endfor %}

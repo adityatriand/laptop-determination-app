@@ -23,15 +23,9 @@
   <caption style="caption-side:top;">Alternatif</caption>
   <thead>
     <tr>
-      <!--{# {% for data in alternatif %}
+      {% for data in alternatif %}
       <th>{{ data.obj.product }}</th>
-      {% endfor %} #}-->
-
-      <th>{{ alternatif.0.obj.product }}</th>
-      <th>{{ alternatif.1.obj.product }}</th>
-      <th>{{ alternatif.2.obj.product }}</th>
-      <th>{{ alternatif.3.obj.product }}</th>
-      <th>{{ alternatif.4.obj.product }}</th>
+      {% endfor %}
     </tr>
   </thead>
 </table>

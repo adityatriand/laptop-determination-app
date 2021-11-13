@@ -59,7 +59,6 @@ def process(context):
     data_temp = context.get("alternatif")
     data_brand = []
     data_fix = []
-    
 
     # ambil data yang sesuai brand
     for data in data_temp:
@@ -189,6 +188,7 @@ def process(context):
 
     data_pilihan = hitungKriteria(data_pilihan.copy())
 
+    # kumpulkan setiap bobot
     hasil_rangking = []
     for i in range(5):
         hasil_rangking.append({"weight":{pilihan[i].lower():[0]*n}, "pilihan":pilihan[i], "bobot":0})
@@ -198,6 +198,7 @@ def process(context):
         for j in range(n):
             hasil_rangking[i]["weight"][pilihan[i].lower()][j] = data_fix[j][pilihan[i].lower()]['weight']
 
+    # hitung perangkingan
     jumlah = []
     for i in range(n):
         jumlah_temp_alt = 0
@@ -209,14 +210,15 @@ def process(context):
 
     hasil_rangking_alternatif = []
     for i in range(n):
-        hasil_rangking_alternatif.append({"rangking":jumlah[i], "rank":0})
+        hasil_rangking_alternatif.append({"rangking":jumlah[i], "rank":0, "obj":None})
 
+    # rangking setiap hasil perangkingan
     jumlah = sorted(jumlah, reverse=True)
     i = 1
     for i in range(n):
         hasil_rangking_alternatif[i]['rank'] = jumlah.index(hasil_rangking_alternatif[i]['rangking']) + 1
+        hasil_rangking_alternatif[i]['obj'] = data_brand[i]
 
-    print(hasil_rangking_alternatif)
     context = {
         'cari': data_pilihan,
         'alternatif' : data_fix,
@@ -290,9 +292,14 @@ def hitungAlternatif(alternatif, kriteria, n):
     for data in alternatif:
         data[kriteria]["ci"] = (data[kriteria]["lambda_max"]-n)/(n-1)
 
+    dataRC = [0, 0, 0.58, 1.90, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59]
+
     # hitung cr alternatif
     for data in alternatif:
-        data[kriteria]["cr"] = data[kriteria]["ci"]/1.12
+        if n <= 15:
+            data[kriteria]["cr"] = data[kriteria]["ci"]/dataRC[n-1]
+        else:
+            data[kriteria]["cr"] = data[kriteria]["ci"]/dataRC[14]
 
     return alternatif
 
@@ -362,8 +369,14 @@ def hitungKriteria(kriteria):
     for data in kriteria:
         data[data["obj"]['pilihan'].lower()]["ci"] = (data[data["obj"]['pilihan'].lower()]["lambda_max"]-n)/(n-1)
 
+    dataRC = [0, 0, 0.58, 1.90, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59]
+
     # hitung cr kriteria
     for data in kriteria:
-        data[data["obj"]['pilihan'].lower()]["cr"] = data[data["obj"]['pilihan'].lower()]["ci"]/1.12
+        if n <= 15:
+            data[data["obj"]['pilihan'].lower()]["cr"] = data[data["obj"]['pilihan'].lower()]["ci"]/dataRC[n-1]
+        else:
+            data[data["obj"]['pilihan'].lower()]["cr"] = data[data["obj"]['pilihan'].lower()]["ci"]/dataRC[14]
+        
 
     return kriteria

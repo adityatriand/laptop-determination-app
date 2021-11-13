@@ -14,11 +14,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.hdd.awal.0 }}</td>
-      <td>{{ data.hdd.awal.1 }}</td>
-      <td>{{ data.hdd.awal.2 }}</td>
-      <td>{{ data.hdd.awal.3 }}</td>
-      <td>{{ data.hdd.awal.4 }}</td>
+
+      {% for data2 in data.hdd.awal %}
+        <td>{{ data2 }}</td>
+      {% endfor %}
+
     </tr>
     {% endfor %}
   </tbody>
@@ -38,11 +38,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.hdd.normalisasi.0|formatFloat }}</td>
-      <td>{{ data.hdd.normalisasi.1|formatFloat }}</td>
-      <td>{{ data.hdd.normalisasi.2|formatFloat }}</td>
-      <td>{{ data.hdd.normalisasi.3|formatFloat }}</td>
-      <td>{{ data.hdd.normalisasi.4|formatFloat }}</td>
+
+      {% for data2 in data.hdd.normalisasi %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.hdd.weight }}</td>
     </tr>
     {% endfor %}
@@ -64,11 +64,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.hdd.terbobot.0|formatFloat }}</td>
-      <td>{{ data.hdd.terbobot.1|formatFloat }}</td>
-      <td>{{ data.hdd.terbobot.2|formatFloat }}</td>
-      <td>{{ data.hdd.terbobot.3|formatFloat }}</td>
-      <td>{{ data.hdd.terbobot.4|formatFloat }}</td>
+
+      {% for data2 in data.hdd.terbobot %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.hdd.wsv }}</td>
       <td>{{ data.hdd.cv }}</td>
     </tr>
@@ -90,11 +90,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.hdd.awal.0|formatFloat }}</td>
-      <td>{{ data.hdd.awal.1|formatFloat }}</td>
-      <td>{{ data.hdd.awal.2|formatFloat }}</td>
-      <td>{{ data.hdd.awal.3|formatFloat }}</td>
-      <td>{{ data.hdd.awal.4|formatFloat }}</td>
+
+      {% for data2 in data.hdd.awal %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.hdd.weight }}</td>
     </tr>
     {% endfor %}

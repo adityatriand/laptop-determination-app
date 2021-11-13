@@ -50,6 +50,18 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {% for data in rangking_alternatif %}
+                  <tr>
+                    <td>{{ data.rank }}</td>
+                    <td>{{ data.obj.company }}</td>
+                    <td>{{ data.obj.product }}</td>
+                    <td>{{ data.obj.cpu }}</td>
+                    <td>{{ data.obj.harga }}</td>
+                    <td>{{ data.obj.ram }}</td>
+                    <td>{{ data.obj.ssd }}</td>
+                    <td>{{ data.obj.hdd }}</td>
+                  </tr>
+                  {% endfor %}
                   <!-- Pakaikan perulangan disini -->
                 </tbody>
               </table>

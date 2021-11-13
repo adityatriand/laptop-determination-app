@@ -14,11 +14,13 @@
     {% for data in rangking %}
     <tr>
       <td>{{ data.pilihan }}</td>
+
       <td>{{ data|formatWeight0 }}</td>
       <td>{{ data|formatWeight1 }}</td>
       <td>{{ data|formatWeight2 }}</td>
       <td>{{ data|formatWeight3 }}</td>
       <td>{{ data|formatWeight4 }}</td>
+
       <td>{{ data.bobot }}</td>
     </tr>
     {% endfor %}
