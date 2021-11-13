@@ -14,11 +14,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.harga.awal.0 }}</td>
-      <td>{{ data.harga.awal.1 }}</td>
-      <td>{{ data.harga.awal.2 }}</td>
-      <td>{{ data.harga.awal.3 }}</td>
-      <td>{{ data.harga.awal.4 }}</td>
+
+      {% for data2 in data.harga.awal %}
+        <td>{{ data2 }}</td>
+      {% endfor %}
+
     </tr>
     {% endfor %}
   </tbody>
@@ -38,11 +38,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.harga.normalisasi.0|formatFloat }}</td>
-      <td>{{ data.harga.normalisasi.1|formatFloat }}</td>
-      <td>{{ data.harga.normalisasi.2|formatFloat }}</td>
-      <td>{{ data.harga.normalisasi.3|formatFloat }}</td>
-      <td>{{ data.harga.normalisasi.4|formatFloat }}</td>
+
+      {% for data2 in data.harga.normalisasi %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.harga.weight }}</td>
     </tr>
     {% endfor %}
@@ -64,11 +64,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.harga.terbobot.0|formatFloat }}</td>
-      <td>{{ data.harga.terbobot.1|formatFloat }}</td>
-      <td>{{ data.harga.terbobot.2|formatFloat }}</td>
-      <td>{{ data.harga.terbobot.3|formatFloat }}</td>
-      <td>{{ data.harga.terbobot.4|formatFloat }}</td>
+
+      {% for data2 in data.harga.terbobot %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.harga.wsv }}</td>
       <td>{{ data.harga.cv }}</td>
     </tr>
@@ -90,11 +90,11 @@
     {% for data in alternatif %}
     <tr>
       <td>{{ data.obj.product }}</td>
-      <td>{{ data.harga.awal.0|formatFloat }}</td>
-      <td>{{ data.harga.awal.1|formatFloat }}</td>
-      <td>{{ data.harga.awal.2|formatFloat }}</td>
-      <td>{{ data.harga.awal.3|formatFloat }}</td>
-      <td>{{ data.harga.awal.4|formatFloat }}</td>
+
+      {% for data2 in data.harga.awal %}
+        <td>{{ data2|formatFloat }}</td>
+      {% endfor %}
+
       <td>{{ data.harga.weight }}</td>
     </tr>
     {% endfor %}
