@@ -4,3 +4,7 @@
 4. tingkat kepentingan belum otomatis
 {# 5. merapikan code #}
 6. belum dinamis pada template (tingkat di tabel perangkingan: line 19 perangkingan,html)
+7. CR 10%
+8. 100 Semua Brand Random
+9. Ubah return json
+10. ubah di template pakai jquery
