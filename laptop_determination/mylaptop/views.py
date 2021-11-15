@@ -11,7 +11,7 @@ def alternatif(request):
     return render(request, 'mylaptop/alternatif.html', context)
 
 def cari(request):
-    data = models.Laptops.objects.all().order_by('company')
+    data = models.Laptops.objects.all()
     criterions = ['Default','Harga','RAM','CPU','SSD','HDD']
     unique_brands = []
     brands = []
@@ -40,7 +40,7 @@ def hasil(request):
             else:
                 data['penting'+str(i+1)] = request.POST['penting_'+str(i+1)]
 
-        data_alternatif = models.Laptops.objects.all().order_by('company')
+        data_alternatif = models.Laptops.objects.all()
         context = {
             'cari': data,
             'alternatif' : data_alternatif
@@ -61,10 +61,16 @@ def process(context):
     data_fix = []
 
     # ambil data yang sesuai brand
-    for data in data_temp:
-        if data.company == data_pilihan['brand']:
+    if data_pilihan['brand'] != 'Semua':
+        for data in data_temp:
+            if data.company == data_pilihan['brand']:
+                data_brand.append(data)
+
+    # ambil data jika tidak ada pilihan brand
+    else:
+        for data in data_temp:
             data_brand.append(data)
-    
+
     # n = len(data_brand)
     n = 5
 
