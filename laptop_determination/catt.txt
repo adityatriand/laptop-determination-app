@@ -1,8 +1,13 @@
 {# 1. belum dinamis dengan jumlah n yang banyak #}
 {# 2. tabel CI berdasarkan n blm di implementasikan #}
 {# 3. belum masukan hasil rank ke atas #}
-4. tingkat kepentingan belum otomatis
+{# 4. tingkat kepentingan belum otomatis #}
 {# 5. merapikan code #}
 6. belum dinamis pada template (tingkat di tabel perangkingan: line 19 perangkingan,html)
-7. CR 10%
+{# 7. CR 10% #}
 {# 8. 100 Semua Brand Random #}
+9. hitungan tetap dihitung semua, namun tampil lima lima
+10. nama laptop pada hasil perankingan tambahi id sehingga terlihat perbedaan
+11. atasi cari laptop jika salah satu default diubah maka harus diubah semua
+12. gunakan datatable pada hasil perankingan order by rank
+13. masalah backend jika jumlah laptop merk tertentu kurang dari 5
