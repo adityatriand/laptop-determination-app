@@ -78,7 +78,7 @@ def process(context):
                 data_brand.append(data_random_brand[i])
 
         else:
-            for data in data_temp:
+            for data in data_random_brand:
                 data_brand.append(data)
 
     # ambil data jika tidak ada pilihan brand
