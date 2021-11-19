@@ -1,7 +1,8 @@
 {% load mylaptop_extras %}
 <h5>Kriteria HDD</h5>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Tingkat Kepentingan lalu Pairwaise Comparison</caption>
+<div>
+<p class="text-left" style="font-weight:bold;">Tingkat Kepentingan lalu Pairwaise Comparison</p>
+<table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>HDD</th>
@@ -23,8 +24,8 @@
     {% endfor %}
   </tbody>
 </table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Normalisasi Matriks</caption>
+<p class="text-left" style="font-weight:bold;">Normalisasi Matriks</p>
+<table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>HDD</th>
@@ -48,8 +49,8 @@
     {% endfor %}
   </tbody>
 </table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Matriks Perkalian Bobot</caption>
+<p class="text-left" style="font-weight:bold;">Matriks Perkalian Bobot</p>
+<table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>HDD</th>
@@ -75,8 +76,8 @@
     {% endfor %}
   </tbody>
 </table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Kesimpulan untuk HDD</caption>
+<p class="text-left" style="font-weight:bold;">Kesimpulan untuk HDD</p>
+<table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>HDD</th>
@@ -108,11 +109,12 @@
     </tr>
     <tr>
       <td>Consistency Index (CI)</td>
-      <td>{{ alternatif.0.hdd.ci }}</td>
+      <td>{{ alternatif.0.hdd.ci|formatFloat2 }}</td>
     </tr>
     <tr>
       <td>Consistency Ration (CR)</td>
-      <td>{{ alternatif.0.hdd.cr }}</td>
+      <td>{{ alternatif.0.hdd.cr|formatFloat2 }}</td>
     </tr>
   </tbody>
 </table>
+</div>

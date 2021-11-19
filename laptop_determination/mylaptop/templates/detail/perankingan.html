@@ -1,11 +1,12 @@
 {% load mylaptop_extras %}
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Perangkingan</caption>
+<div>
+<p class="text-left" style="font-weight:bold;">Perangkingan</p>
+<table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>Bobot Gabungan Secara Keseluruhan</th>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
+      <th>{{ data.obj.product }} {{data.obj.id_laptop}}</th>
       {% endfor %}
       <th>Bobot Kriteria</th>
     </tr>
@@ -15,11 +16,9 @@
     <tr>
       <td>{{ data.pilihan }}</td>
 
-      <td>{{ data|formatWeight0 }}</td>
-      <td>{{ data|formatWeight1 }}</td>
-      <td>{{ data|formatWeight2 }}</td>
-      <td>{{ data|formatWeight3 }}</td>
-      <td>{{ data|formatWeight4 }}</td>
+      {% for data2 in alternatif %}
+      <td>{{ data|formatWeight:forloop.counter0 }}</td>
+      {% endfor %}
 
       <td>{{ data.bobot }}</td>
     </tr>
@@ -40,3 +39,4 @@
     </tr>
   </tbody>
 </table>
+</div>

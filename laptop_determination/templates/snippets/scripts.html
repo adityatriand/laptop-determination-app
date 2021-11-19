@@ -29,6 +29,7 @@ $.widget.bridge('uibutton', $.ui.button)
 		var temp3 = $('#penting_3').val();
 		var temp4 = $('#penting_4').val();
 		var temp5 = $('#penting_5').val();
+
 	    function UpdateOption(tanda,pilihan){
 	    	var temp = [temp1,temp2,temp3,temp4,temp5];
 	    	if(pilihan != "kosong"){
@@ -55,30 +56,75 @@ $.widget.bridge('uibutton', $.ui.button)
 	    	var data = $(this).val();
 	    	if(data!="kosong") temp1 = data;
 	    	UpdateOption(tanda,data);
+	    	if(data=="kosong") temp1 = "kosong";
+	    	alert('Jika mengubah salah satu tingkat kepentingan maka harus mengubah semua');
+	    	$('#cari').attr('disabled','disabled');
+	    	if(temp1 == "kosong" && temp2 == "kosong" && temp3 == "kosong" && temp4 == "kosong" && temp5 == "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
+	    	if(temp1 != "kosong" && temp2 != "kosong" && temp3 != "kosong" && temp4 != "kosong" && temp5 != "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
 	    })
 	    $('#penting_2').change(function(){
 	    	var tanda = 2;
 	    	var data = $(this).val();
 	    	if(data!="kosong") temp2 = data;
 	    	UpdateOption(tanda,data);
+	    	if(data=="kosong") temp2 = "kosong";
+			alert('Jika mengubah salah satu tingkat kepentingan maka harus mengubah semua');
+			$('#cari').attr('disabled','disabled');
+	    	if(temp1 == "kosong" && temp2 == "kosong" && temp3 == "kosong" && temp4 == "kosong" && temp5 == "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
+			if(temp1 != "kosong" && temp2 != "kosong" && temp3 != "kosong" && temp4 != "kosong" && temp5 != "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
 	    })
 	    $('#penting_3').change(function(){
 	    	var tanda = 3;
 	    	var data = $(this).val();
 	    	if(data!="kosong") temp3 = data;
 	    	UpdateOption(tanda,data);
+	    	if(data=="kosong") temp3 = "kosong";
+	    	alert('Jika mengubah salah satu tingkat kepentingan maka harus mengubah semua');
+	    	$('#cari').attr('disabled','disabled');
+	    	if(temp1 == "kosong" && temp2 == "kosong" && temp3 == "kosong" && temp4 == "kosong" && temp5 == "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
+	    	if(temp1 != "kosong" && temp2 != "kosong" && temp3 != "kosong" && temp4 != "kosong" && temp5 != "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
 	    })
 	    $('#penting_4').change(function(){
 	    	var tanda = 4;
 	    	var data = $(this).val();
 	    	if(data!="kosong") temp4 = data;
 	    	UpdateOption(tanda,data);
+	    	if(data=="kosong") temp4 = "kosong";
+	    	alert('Jika mengubah salah satu tingkat kepentingan maka harus mengubah semua');
+	    	$('#cari').attr('disabled','disabled');
+	    	if(temp1 == "kosong" && temp2 == "kosong" && temp3 == "kosong" && temp4 == "kosong" && temp5 == "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
+	    	if(temp1 != "kosong" && temp2 != "kosong" && temp3 != "kosong" && temp4 != "kosong" && temp5 != "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
 	    })
 	    $('#penting_5').change(function(){
 	    	var tanda = 5;
 	    	var data = $(this).val();
 	    	if(data!="kosong") temp5 = data;
 	    	UpdateOption(tanda,data);
+	    	if(data=="kosong") temp5 = "kosong";
+	    	alert('Jika mengubah salah satu tingkat kepentingan maka harus mengubah semua');
+	    	$('#cari').attr('disabled','disabled');
+	    	if(temp1 == "kosong" && temp2 == "kosong" && temp3 == "kosong" && temp4 == "kosong" && temp5 == "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
+	    	if(temp1 != "kosong" && temp2 != "kosong" && temp3 != "kosong" && temp4 != "kosong" && temp5 != "kosong"){
+	    		$('#cari').removeAttr('disabled');
+	    	}
 	    })
 
 	    $('#reset_penting').click(function(){

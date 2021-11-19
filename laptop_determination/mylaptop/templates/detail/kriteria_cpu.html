@@ -1,122 +1,124 @@
 {% load mylaptop_extras %}
 <h5>Kriteria CPU</h5>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Tingkat Kepentingan lalu Pairwaise Comparison</caption>
-  <thead>
-    <tr>
-      <th>CPU</th>
+<div>
+  <p class="text-left" style="font-weight:bold;">Tingkat Kepentingan lalu Pairwaise Comparison</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
+        {% for data in alternatif %}
+          <th>{{ data.obj.product }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-        <th>{{ data.obj.product }}</th>
+      <tr>
+        <td>{{ data.obj.product }}</td>
+
+        {% for data2 in data.cpu.awal %}
+          <td>{{ data2 }}</td>
+        {% endfor %}
+
+      </tr>
       {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Normalisasi Matriks</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
 
-      {% for data2 in data.cpu.awal %}
-        <td>{{ data2 }}</td>
-      {% endfor %}
+        {% for data in alternatif %}
+          <th>{{ data.obj.product }}</th>
+        {% endfor %}
 
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Normalisasi Matriks</caption>
-  <thead>
-    <tr>
-      <th>CPU</th>
-
+        <th>Weights (W)</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-        <th>{{ data.obj.product }}</th>
+      <tr>
+        <td>{{ data.obj.product }}</td>
+
+        {% for data2 in data.cpu.normalisasi %}
+          <td>{{ data2|formatFloat }}</td>
+        {% endfor %}
+
+        <td>{{ data.cpu.weight }}</td>
+      </tr>
       {% endfor %}
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Matriks Perkalian Bobot</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
 
-      <th>Weights (W)</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
+        {% for data in alternatif %}
+          <th>{{ data.obj.product }}</th>
+        {% endfor %}
 
-      {% for data2 in data.cpu.normalisasi %}
-        <td>{{ data2|formatFloat }}</td>
-      {% endfor %}
-
-      <td>{{ data.cpu.weight }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Matriks Perkalian Bobot</caption>
-  <thead>
-    <tr>
-      <th>CPU</th>
-
+        <th>WSV</th>
+        <th>CV</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-        <th>{{ data.obj.product }}</th>
+      <tr>
+        <td>{{ data.obj.product }}</td>
+
+        {% for data2 in data.cpu.terbobot %}
+          <td>{{ data2|formatFloat }}</td>
+        {% endfor %}
+
+        <td>{{ data.cpu.wsv }}</td>
+        <td>{{ data.cpu.cv }}</td>
+      </tr>
       {% endfor %}
-
-      <th>WSV</th>
-      <th>CV</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
-
-      {% for data2 in data.cpu.terbobot %}
-        <td>{{ data2|formatFloat }}</td>
-      {% endfor %}
-
-      <td>{{ data.cpu.wsv }}</td>
-      <td>{{ data.cpu.cv }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Kesimpulan untuk CPU</caption>
-  <thead>
-    <tr>
-      <th>CPU</th>
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Kesimpulan untuk CPU</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
+        {% for data in alternatif %}
+          <th>{{ data.obj.product }}</th>
+        {% endfor %}
+        <th>Weight (W)</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-        <th>{{ data.obj.product }}</th>
-      {% endfor %}
-      <th>Weight (W)</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
+      <tr>
+        <td>{{ data.obj.product }}</td>
 
-      {% for data2 in data.cpu.awal %}
-        <td>{{ data2|formatFloat }}</td>
+        {% for data2 in data.cpu.awal %}
+          <td>{{ data2|formatFloat }}</td>
+        {% endfor %}
+        
+        <td>{{ data.cpu.weight }}</td>
+      </tr>
       {% endfor %}
-      
-      <td>{{ data.cpu.weight }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
- <table class="table table-bordered">
-  <tbody>
-    <tr>
-      <td>Lambda Max</td>
-      <td>{{ alternatif.0.cpu.lambda_max }}</td>
-    </tr>
-    <tr>
-      <td>Consistency Index (CI)</td>
-      <td>{{ alternatif.0.cpu.ci }}</td>
-    </tr>
-    <tr>
-      <td>Consistency Ration (CR)</td>
-      <td>{{ alternatif.0.cpu.cr }}</td>
-    </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+   <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Lambda Max</td>
+        <td>{{ alternatif.0.cpu.lambda_max }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Index (CI)</td>
+        <td>{{ alternatif.0.cpu.ci|formatFloat2 }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Ration (CR)</td>
+        <td>{{ alternatif.0.cpu.cr|formatFloat2 }}</td>
+      </tr>
+    </tbody>
+  </table> 
+</div>
