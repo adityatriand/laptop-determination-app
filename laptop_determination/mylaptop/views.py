@@ -63,8 +63,22 @@ def process(context):
 
     # ambil data yang sesuai brand
     if data_pilihan['brand'] != 'Semua':
+        data_random_brand = []
         for data in data_temp:
             if data.company == data_pilihan['brand']:
+                data_random_brand.append(data)
+
+        if(len(data_random_brand)>20):
+            randomlist = []
+            for i in range(0,20):
+                n = random.randint(0,len(data_random_brand))
+                randomlist.append(n)
+
+            for i in range(len(randomlist)):
+                data_brand.append(data_random_brand[i])
+
+        else:
+            for data in data_temp:
                 data_brand.append(data)
 
     # ambil data jika tidak ada pilihan brand
