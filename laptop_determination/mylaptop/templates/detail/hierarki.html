@@ -1,6 +1,6 @@
 {% load mylaptop_extras %}
 <table class="table table-bordered">
-  <caption style="caption-side:top;">Tujuan</caption>
+<caption style="caption-side:top;">Tujuan</caption>
   <thead>
     <tr>
       <th>Penentuan Laptop</th>
@@ -8,8 +8,8 @@
   </thead>
 </table>
 <table class="table table-bordered">
+<caption style="caption-side:top;">Kriteria</caption>
   <thead>
-    <caption style="caption-side:top;">Kriteria</caption>
     <tr>
       <th>CPU</th>
       <th>Harga</th>
@@ -19,12 +19,12 @@
     </tr>
   </thead>
 </table>
-<table class="table table-bordered">
+<table class="table table-bordered table-size">
   <caption style="caption-side:top;">Alternatif</caption>
-  <thead>
+  <thead class="table-responsif">
     <tr>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
+      <th>{{ data.obj.product }}<br>(id:{{ data.obj.id_laptop }})</th>
       {% endfor %}
     </tr>
   </thead>

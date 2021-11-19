@@ -36,10 +36,11 @@
               <div class="col-12">
                 <p>Berikut 5 laptop teratas yang kami rekomendasikan dengan keinginan anda</p>
               </div>
-              <table class="table table-bordered">
+              <table class="table table-bordered table-responsif">
                 <thead>
                   <tr>
                     <th>Rank</th>
+                    <th>ID Laptop</th>
                     <th>Brand</th>
                     <th>Nama Laptop</th>
                     <th>CPU</th>
@@ -51,16 +52,23 @@
                 </thead>
                 <tbody>
                   {% for data in rangking_alternatif %}
-                  <tr>
-                    <td>{{ data.rank }}</td>
-                    <td>{{ data.obj.company }}</td>
-                    <td>{{ data.obj.product }}</td>
-                    <td>{{ data.obj.cpu }}</td>
-                    <td>{{ data.obj.harga }}</td>
-                    <td>{{ data.obj.ram }}</td>
-                    <td>{{ data.obj.ssd }}</td>
-                    <td>{{ data.obj.hdd }}</td>
-                  </tr>
+                    {% if forloop.counter < 6 %}
+                      {% for data2 in rangking_alternatif %}
+                        {% if data2.rank == forloop.parentloop.counter  %}
+                          <tr>
+                            <td>{{ data2.rank }}</td>
+                            <td>{{ data2.obj.id_laptop }}</td>
+                            <td>{{ data2.obj.company }}</td>
+                            <td>{{ data2.obj.product }}</td>
+                            <td>{{ data2.obj.cpu }}</td>
+                            <td>{{ data2.obj.harga }}</td>
+                            <td>{{ data2.obj.ram }}</td>
+                            <td>{{ data2.obj.ssd }}</td>
+                            <td>{{ data2.obj.hdd }}</td>
+                          </tr> 
+                        {% endif %}
+                      {% endfor %} 
+                    {% endif %}
                   {% endfor %}
                   <!-- Pakaikan perulangan disini -->
                 </tbody>
@@ -75,7 +83,9 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="container-fluid">
     <div class="row" style="display:none;" id="detail_perhitungan" tanda='0'>
 
       <div class="col-12">
@@ -129,8 +139,8 @@
       </div>
 
     </div>
-
   </div>
+
 </section>
 {% endblock content_main %}
 

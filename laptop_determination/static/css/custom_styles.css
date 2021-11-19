@@ -100,3 +100,65 @@ a{
     font-family: 'Ubuntu', sans-serif;
     background-color: var(--col_kuning);
 }
+
+.table-size{
+    width: 1043px !important;
+}
+
+.table-responsif{
+    display: block;
+    max-width: 1043px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.table-responsif tr, .table-responsif th{
+    padding: 0.75rem 50px !important ;
+}
+
+@media (max-width: 575.98px)
+{
+    .title-home{
+        margin-top: 50px;
+        font-size: 25px;
+    }
+
+    .content-header h1{
+        font-size: 20px;
+    }
+
+    img.img-hp{
+        width: 200px;
+    }
+
+    .btn-med
+    {
+        padding: 5px 20px;
+        font-size: 15px;
+    }
+
+    .main-footer{
+        text-align: center;
+    }
+
+    .card-title
+    {
+        font-size: 15px;
+    }
+
+    .pagination{
+        display: block;
+        margin: 20px 0 !important;
+    }
+
+    .table-size{
+    width: 300px !important;
+    }
+
+    .table-responsif{
+        display: block;
+        max-width: 300px;
+        max-height: 400px;
+        overflow: auto;
+    }
+}

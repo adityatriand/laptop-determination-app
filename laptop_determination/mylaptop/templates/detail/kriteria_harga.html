@@ -1,118 +1,120 @@
 {% load mylaptop_extras %}
 <h5>Kriteria Harga</h5>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Tingkat Kepentingan lalu Pairwaise Comparison</caption>
-  <thead>
-    <tr>
-      <th>Harga</th>
+<div>
+  <p class="text-left" style="font-weight:bold;">Tingkat Kepentingan lalu Pairwaise Comparison</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatif %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
-      {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
+      <tr>
+        <td>{{ data.obj.product }}</td>
 
-      {% for data2 in data.harga.awal %}
-        <td>{{ data2 }}</td>
-      {% endfor %}
+        {% for data2 in data.harga.awal %}
+          <td>{{ data2 }}</td>
+        {% endfor %}
 
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Normalisasi Matriks</caption>
-  <thead>
-    <tr>
-      <th>Harga</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Normalisasi Matriks</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatif %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+        <th>Weights (W)</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
-      {% endfor %}
-      <th>Weights (W)</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
+      <tr>
+        <td>{{ data.obj.product }}</td>
 
-      {% for data2 in data.harga.normalisasi %}
-        <td>{{ data2|formatFloat }}</td>
-      {% endfor %}
+        {% for data2 in data.harga.normalisasi %}
+          <td>{{ data2|formatFloat }}</td>
+        {% endfor %}
 
-      <td>{{ data.harga.weight }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Matriks Perkalian Bobot</caption>
-  <thead>
-    <tr>
-      <th>Harga</th>
+        <td>{{ data.harga.weight }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Matriks Perkalian Bobot</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatif %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+        <th>WSV</th>
+        <th>CV</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
-      {% endfor %}
-      <th>WSV</th>
-      <th>CV</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
+      <tr>
+        <td>{{ data.obj.product }}</td>
 
-      {% for data2 in data.harga.terbobot %}
-        <td>{{ data2|formatFloat }}</td>
-      {% endfor %}
+        {% for data2 in data.harga.terbobot %}
+          <td>{{ data2|formatFloat }}</td>
+        {% endfor %}
 
-      <td>{{ data.harga.wsv }}</td>
-      <td>{{ data.harga.cv }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<table class="table table-bordered">
-  <caption style="caption-side:top;">Kesimpulan untuk Harga</caption>
-  <thead>
-    <tr>
-      <th>Harga</th>
+        <td>{{ data.harga.wsv }}</td>
+        <td>{{ data.harga.cv }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Kesimpulan untuk Harga</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatif %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+        <th>Weight (W)</th>
+      </tr>
+    </thead>
+    <tbody>
       {% for data in alternatif %}
-      <th>{{ data.obj.product }}</th>
-      {% endfor %}
-      <th>Weight (W)</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in alternatif %}
-    <tr>
-      <td>{{ data.obj.product }}</td>
+      <tr>
+        <td>{{ data.obj.product }}</td>
 
-      {% for data2 in data.harga.awal %}
-        <td>{{ data2|formatFloat }}</td>
-      {% endfor %}
+        {% for data2 in data.harga.awal %}
+          <td>{{ data2|formatFloat }}</td>
+        {% endfor %}
 
-      <td>{{ data.harga.weight }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
- <table class="table table-bordered">
-  <tbody>
-    <tr>
-      <td>Lambda Max</td>
-      <td>{{ alternatif.0.harga.lambda_max }}</td>
-    </tr>
-    <tr>
-      <td>Consistency Index (CI)</td>
-      <td>{{ alternatif.0.harga.ci }}</td>
-    </tr>
-    <tr>
-      <td>Consistency Ration (CR)</td>
-      <td>{{ alternatif.0.harga.cr }}</td>
-    </tr>
-  </tbody>
-</table>
+        <td>{{ data.harga.weight }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Lambda Max</td>
+        <td>{{ alternatif.0.harga.lambda_max }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Index (CI)</td>
+        <td>{{ alternatif.0.harga.ci|formatFloat2 }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Ration (CR)</td>
+        <td>{{ alternatif.0.harga.cr|formatFloat2 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

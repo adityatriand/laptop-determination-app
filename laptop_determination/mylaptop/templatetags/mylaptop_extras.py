@@ -40,20 +40,12 @@ def formatFloat(angka):
 	return "%.3f" % angka
 
 @register.filter
-def formatWeight0(data):
-	return "%.5f" % data["weight"][data['pilihan'].lower()][0]
+def formatFloat2(angka):
+	return "%.20f" % angka
+
 @register.filter
-def formatWeight1(data):
-	return "%.5f" % data["weight"][data['pilihan'].lower()][1]
-@register.filter
-def formatWeight2(data):
-	return "%.5f" % data["weight"][data['pilihan'].lower()][2]
-@register.filter
-def formatWeight3(data):
-	return "%.5f" % data["weight"][data['pilihan'].lower()][3]
-@register.filter
-def formatWeight4(data):
-	return "%.5f" % data["weight"][data['pilihan'].lower()][4]
+def formatWeight(data,index):
+	return "%.5f" % data["weight"][data['pilihan'].lower()][int(index)]
 
 @register.filter
 def konversiMemori(ukuran):

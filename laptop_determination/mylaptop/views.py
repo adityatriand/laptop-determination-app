@@ -70,15 +70,15 @@ def process(context):
     # ambil data jika tidak ada pilihan brand
     else:
         randomlist = []
-        for i in range(0,100):
+        for i in range(0,20):
             n = random.randint(0,len(data_temp))
             randomlist.append(n)
 
         for i in range(len(randomlist)):
             data_brand.append(data_temp[i])
 
-    # n = len(data_brand)
-    n = 5
+    n = len(data_brand)
+    # n = 5
 
     # ambil n data awal dan tambahkan nilai default 0
     for i in range(n):
@@ -147,50 +147,50 @@ def process(context):
 
     data_pilihan = []
     for i in range(5):
-        data_pilihan.append({"obj":{"pilihan":pilihan[i]}, "cpu":{"awal":[0]*n, 
-                                                            "normalisasi":[0]*n, 
+        data_pilihan.append({"obj":{"pilihan":pilihan[i]}, "cpu":{"awal":[0]*5, 
+                                                            "normalisasi":[0]*5, 
                                                             "weight":0, 
-                                                            "terbobot":[0]*n,
+                                                            "terbobot":[0]*5,
                                                             "wsv":0,
                                                             "cv":0,
                                                             "lambda_max":0.0,
                                                             "ci":0,
                                                             "cr":0
                                                             },
-                                                    "harga":{"awal":[0]*n, 
-                                                            "normalisasi":[0]*n, 
+                                                    "harga":{"awal":[0]*5, 
+                                                            "normalisasi":[0]*5, 
                                                             "weight":0, 
-                                                            "terbobot":[0]*n,
+                                                            "terbobot":[0]*5,
                                                             "wsv":0,
                                                             "cv":0,
                                                             "lambda_max":0.0,
                                                             "ci":0,
                                                             "cr":0
                                                             },
-                                                    "ram":{"awal":[0]*n, 
-                                                            "normalisasi":[0]*n, 
+                                                    "ram":{"awal":[0]*5, 
+                                                            "normalisasi":[0]*5, 
                                                             "weight":0, 
-                                                            "terbobot":[0]*n,
+                                                            "terbobot":[0]*5,
                                                             "wsv":0,
                                                             "cv":0,
                                                             "lambda_max":0.0,
                                                             "ci":0,
                                                             "cr":0
                                                             },
-                                                    "ssd":{"awal":[0]*n, 
-                                                            "normalisasi":[0]*n, 
+                                                    "ssd":{"awal":[0]*5, 
+                                                            "normalisasi":[0]*5, 
                                                             "weight":0, 
-                                                            "terbobot":[0]*n,
+                                                            "terbobot":[0]*5,
                                                             "wsv":0,
                                                             "cv":0,
                                                             "lambda_max":0.0,
                                                             "ci":0,
                                                             "cr":0
                                                             },
-                                                    "hdd":{"awal":[0]*n, 
-                                                            "normalisasi":[0]*n, 
+                                                    "hdd":{"awal":[0]*5, 
+                                                            "normalisasi":[0]*5, 
                                                             "weight":0, 
-                                                            "terbobot":[0]*n,
+                                                            "terbobot":[0]*5,
                                                             "wsv":0,
                                                             "cv":0,
                                                             "lambda_max":0.0,
@@ -230,6 +230,8 @@ def process(context):
     for i in range(n):
         hasil_rangking_alternatif[i]['rank'] = jumlah.index(hasil_rangking_alternatif[i]['rangking']) + 1
         hasil_rangking_alternatif[i]['obj'] = data_brand[i]
+
+    # hasil_rangking_alternatif.sort(key=lambda x: x.get('rank'))
 
     context = {
         'cari': data_pilihan,
@@ -343,7 +345,6 @@ def hitungAlternatif(alternatif, kriteria, n):
                 cr_lebih += 1
 
         if cr_lebih > 0:
-            print(cr_lebih)
             rand1 = random.randint(0, n-1)
             rand2 = random.randint(0, n-1)
             if alternatif[rand1][kriteria]["awal"][rand2] > 1:
@@ -436,7 +437,6 @@ def hitungKriteria(kriteria, pilihan):
                 cr_lebih += 1
                 
         if cr_lebih > 0:
-            print(cr_lebih)
             rand1 = random.randint(0, n-1)
             rand2 = random.randint(0, n-1)
             if kriteria[rand1][kriteria[rand1]["obj"]['pilihan'].lower()]["awal"][rand2] > 1:
@@ -476,7 +476,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 5
                 elif langkah == 4:
                     return 6
-            elif len(daftar_kepetingan) <= 9:
+            elif len(daftar_kepentingan) <= 9:
                 if langkah == 1 :
                     return 2
                 elif langkah == 2:
@@ -493,7 +493,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 9:
                     return 7
-            elif len(daftar_kepetingan) <= 17:
+            elif len(daftar_kepentingan) <= 17:
                 if langkah == 1 or langkah == 2:
                     return 2
                 elif langkah == 3 or langkah == 4:
@@ -510,7 +510,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 15 or langkah == 16:
                     return 7
-            elif len(daftar_kepetingan) <= 33:
+            elif len(daftar_kepentingan) <= 33:
                 if langkah <= 4:
                     return 2
                 elif langkah <= 8:
@@ -527,7 +527,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 32:
                     return 7
-            elif len(daftar_kepetingan) <= 65:
+            elif len(daftar_kepentingan) <= 65:
                 if langkah <= 8:
                     return 2
                 elif langkah <= 16:
@@ -544,7 +544,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 64:
                     return 7
-            elif len(daftar_kepetingan) >= 66:
+            elif len(daftar_kepentingan) >= 66:
                 if langkah <= 16:
                     return 2
                 elif langkah <= 32:
@@ -575,7 +575,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 5
                 elif langkah == 4:
                     return 6
-            elif len(daftar_kepetingan) <= 9:
+            elif len(daftar_kepentingan) <= 9:
                 if langkah == 1 :
                     return 2
                 elif langkah == 2:
@@ -592,7 +592,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 9:
                     return 7
-            elif len(daftar_kepetingan) <= 17:
+            elif len(daftar_kepentingan) <= 17:
                 if langkah == 1 or langkah == 2:
                     return 2
                 elif langkah == 3 or langkah == 4:
@@ -609,7 +609,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 15 or langkah == 16:
                     return 7
-            elif len(daftar_kepetingan) <= 33:
+            elif len(daftar_kepentingan) <= 33:
                 if langkah <= 4:
                     return 2
                 elif langkah <= 8:
@@ -626,7 +626,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 32:
                     return 7
-            elif len(daftar_kepetingan) <= 65:
+            elif len(daftar_kepentingan) <= 65:
                 if langkah <= 8:
                     return 2
                 elif langkah <= 16:
@@ -643,7 +643,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 64:
                     return 7
-            elif len(daftar_kepetingan) >= 66:
+            elif len(daftar_kepentingan) >= 66:
                 if langkah <= 16:
                     return 2
                 elif langkah <= 32:
@@ -674,7 +674,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 5
                 elif langkah == 4:
                     return 6
-            elif len(daftar_kepetingan) <= 9:
+            elif len(daftar_kepentingan) <= 9:
                 if langkah == 1 :
                     return 2
                 elif langkah == 2:
@@ -691,7 +691,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 9:
                     return 7
-            elif len(daftar_kepetingan) <= 17:
+            elif len(daftar_kepentingan) <= 17:
                 if langkah == 1 or langkah == 2:
                     return 2
                 elif langkah == 3 or langkah == 4:
@@ -708,7 +708,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 15 or langkah == 16:
                     return 7
-            elif len(daftar_kepetingan) <= 33:
+            elif len(daftar_kepentingan) <= 33:
                 if langkah <= 4:
                     return 2
                 elif langkah <= 8:
@@ -725,7 +725,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 32:
                     return 7
-            elif len(daftar_kepetingan) <= 65:
+            elif len(daftar_kepentingan) <= 65:
                 if langkah <= 8:
                     return 2
                 elif langkah <= 16:
@@ -742,7 +742,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 64:
                     return 7
-            elif len(daftar_kepetingan) >= 66:
+            elif len(daftar_kepentingan) >= 66:
                 if langkah <= 16:
                     return 2
                 elif langkah <= 32:
@@ -773,7 +773,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 5
                 elif langkah == 4:
                     return 6
-            elif len(daftar_kepetingan) <= 9:
+            elif len(daftar_kepentingan) <= 9:
                 if langkah == 1 :
                     return 2
                 elif langkah == 2:
@@ -790,7 +790,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 9:
                     return 7
-            elif len(daftar_kepetingan) <= 17:
+            elif len(daftar_kepentingan) <= 17:
                 if langkah == 1 or langkah == 2:
                     return 2
                 elif langkah == 3 or langkah == 4:
@@ -807,7 +807,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 15 or langkah == 16:
                     return 7
-            elif len(daftar_kepetingan) <= 33:
+            elif len(daftar_kepentingan) <= 33:
                 if langkah <= 4:
                     return 2
                 elif langkah <= 8:
@@ -824,7 +824,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 32:
                     return 7
-            elif len(daftar_kepetingan) <= 65:
+            elif len(daftar_kepentingan) <= 65:
                 if langkah <= 8:
                     return 2
                 elif langkah <= 16:
@@ -841,7 +841,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 64:
                     return 7
-            elif len(daftar_kepetingan) >= 66:
+            elif len(daftar_kepentingan) >= 66:
                 if langkah <= 16:
                     return 2
                 elif langkah <= 32:
@@ -872,7 +872,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 5
                 elif langkah == 4:
                     return 6
-            elif len(daftar_kepetingan) <= 9:
+            elif len(daftar_kepentingan) <= 9:
                 if langkah == 1 :
                     return 2
                 elif langkah == 2:
@@ -889,7 +889,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 9:
                     return 7
-            elif len(daftar_kepetingan) <= 17:
+            elif len(daftar_kepentingan) <= 17:
                 if langkah == 1 or langkah == 2:
                     return 2
                 elif langkah == 3 or langkah == 4:
@@ -906,7 +906,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah == 15 or langkah == 16:
                     return 7
-            elif len(daftar_kepetingan) <= 33:
+            elif len(daftar_kepentingan) <= 33:
                 if langkah <= 4:
                     return 2
                 elif langkah <= 8:
@@ -923,7 +923,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 32:
                     return 7
-            elif len(daftar_kepetingan) <= 65:
+            elif len(daftar_kepentingan) <= 65:
                 if langkah <= 8:
                     return 2
                 elif langkah <= 16:
@@ -940,7 +940,7 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 64:
                     return 7
-            elif len(daftar_kepetingan) >= 66:
+            elif len(daftar_kepentingan) >= 66:
                 if langkah <= 16:
                     return 2
                 elif langkah <= 32:
