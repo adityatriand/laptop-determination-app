@@ -42,7 +42,11 @@
                   <select class="form-control select2bs4" name="brand" style="width: 100%;">
                     <option value="Semua">Semua Brand</option>
                     {% for brand in brands  %}
-                      <option value="{{brand.company}}" >{{brand.company}}</option>
+                      {% if brand.company == "Samsung" or brand.company == "Huawei" %}
+                      
+                      {% else %}
+                        <option value="{{brand.company}}" >{{brand.company}}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
                 </div>

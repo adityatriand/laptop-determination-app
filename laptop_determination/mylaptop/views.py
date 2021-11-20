@@ -55,6 +55,14 @@ def hasil(request):
         return HttpResponseRedirect('/mylaptop/cari/')
         # return render(request, 'mylaptop/hasil.html')
 
+def CheckSama(randomlist,n):
+    for x in range(len(randomlist)):
+        if n == randomlist[x]:
+            break
+            return True
+        else:
+            return False
+
 def process(context):
     data_pilihan = context.get("cari")
     data_temp = context.get("alternatif")
@@ -72,10 +80,16 @@ def process(context):
             randomlist = []
             for i in range(0,20):
                 n = random.randint(0,len(data_random_brand))
-                randomlist.append(n)
+                if CheckSama(randomlist,n):
+                    continue
+                else:
+                    randomlist.append(n)
 
             for i in range(len(randomlist)):
-                data_brand.append(data_random_brand[i])
+                if data_pilihan['brand'] == "Lenovo":
+                    data_brand.append(data_random_brand[randomlist[i]])
+                else:
+                    data_brand.append(data_random_brand[i])
 
         else:
             for data in data_random_brand:
@@ -86,12 +100,18 @@ def process(context):
         randomlist = []
         for i in range(0,20):
             n = random.randint(0,len(data_temp))
-            randomlist.append(n)
+            if CheckSama(randomlist,n):
+                continue
+            else:
+                randomlist.append(n)
 
         for i in range(len(randomlist)):
             data_brand.append(data_temp[i])
 
-    n = len(data_brand)
+    if data_pilihan['brand'] == "Huawei":
+        n = 2
+    else:
+        n = len(data_brand)
     # n = 5
 
     # ambil n data awal dan tambahkan nilai default 0
@@ -971,3 +991,4 @@ def tentukanTingkatKepentingan(alternatif1, alternatif2, kriteria, daftar_kepent
                     return 6
                 elif langkah <= 128:
                     return 7
+
