@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block body_class %}search-page{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item active">Search Laptop</li>
+</ol>
+{% endblock breadcrumb %}
+
+{% block page_header %}
+<div class="text-center mb-4">
+  <h1>Search Laptop</h1>
+  <p class="text-light">Set your preferences to find the perfect laptop</p>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3>Laptop Search Configuration</h3>
+  </div>
+
+  <form method="POST" action="/laptop-selection/results/">
+    {% csrf_token %}
+    <div class="card-body">
+      <div id="notification" class="notification"></div>
+      
+      <!-- Brand Selection -->
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Brand Preference</h5>
+          <p>If you prefer a specific brand, select it below. The system will search for laptops matching your selected brand.</p>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label" for="brand">Preferred Brand</label>
+            <select class="form-control form-select" id="brand" name="brand">
+              <option value="Semua">All Brands</option>
+              {% for brand in brands %}
+                <option value="{{ brand.company }}">{{ brand.company }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <hr class="mt-4 mb-4">
+
+      <!-- Priority Selection -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="priority-section drag-drop">
+            <h5>Priority Order</h5>
+            <p class="priority-description">Rank the criteria below according to your preferences (1 = most important, 5 = least important).Drag and drop to reorder your criteria preferences</p>
+            
+            <!-- Priority Order -->
+            <div class="priority-slots">
+              <div class="priority-list" id="priority-list">
+                <div class="priority-item-wrapper" data-priority="1" data-criteria="Price" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">💰</div>
+                    <div class="criteria-name">Price</div>
+                    <div class="criteria-description">Lower is better</div>
+                  </div>
+                  <div class="priority-number" data-priority="1">1</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="2" data-criteria="RAM" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">⚡</div>
+                    <div class="criteria-name">RAM</div>
+                    <div class="criteria-description">Higher = faster processing</div>
+                  </div>
+                  <div class="priority-number" data-priority="2">2</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="3" data-criteria="SSD" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">💾</div>
+                    <div class="criteria-name">SSD</div>
+                    <div class="criteria-description">Higher = faster storage</div>
+                  </div>
+                  <div class="priority-number" data-priority="3">3</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="4" data-criteria="HDD" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">🗄️</div>
+                    <div class="criteria-name">HDD</div>
+                    <div class="criteria-description">Higher = more storage</div>
+                  </div>
+                  <div class="priority-number" data-priority="4">4</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="5" data-criteria="CPU" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">🖥️</div>
+                    <div class="criteria-name">CPU</div>
+                    <div class="criteria-description">Higher = more power</div>
+                  </div>
+                  <div class="priority-number" data-priority="5">5</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Hidden inputs for form submission -->
+            <input type="hidden" id="priority_1" name="priority_1" value="Price">
+            <input type="hidden" id="priority_2" name="priority_2" value="RAM">
+            <input type="hidden" id="priority_3" name="priority_3" value="SSD">
+            <input type="hidden" id="priority_4" name="priority_4" value="HDD">
+            <input type="hidden" id="priority_5" name="priority_5" value="CPU">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body" style="border-top: 1px solid var(--border-light);">
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline" id="reset-btn">Reset Settings</button>
+        <button type="submit" class="btn btn-primary btn-large" id="search-btn">Search Laptop</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+

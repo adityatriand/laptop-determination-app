@@ -1,0 +1,44 @@
+{% load laptop_selection_extras %}
+<div>
+<p class="text-left" style="font-weight:bold;">Final Ranking</p>
+<div class="table-responsive">
+<table class="table table-bordered table-size table-responsif">
+  <thead>
+    <tr>
+      <th>Combined Weight Overall</th>
+      {% for data in alternatives %}
+      <th>Laptop {{ forloop.counter }}</th>
+      {% endfor %}
+      <th>Criteria Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for data in ranking %}
+    <tr>
+      <td>{{ data.choice }}</td>
+
+      {% for data2 in alternatives %}
+      <td>{{ data|format_weight:forloop.counter0 }}</td>
+      {% endfor %}
+
+      <td>{{ data.weight_value|format_float }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td>Final Ranking</td>
+      {% for data in ranking_alternatives %}
+      <td>{{ data.score|format_float }}</td>
+      {% endfor %}
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      {% for data in ranking_alternatives %}
+      <td>{{ data.rank }}</td>
+      {% endfor %}
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>

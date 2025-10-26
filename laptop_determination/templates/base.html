@@ -5,50 +5,431 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{% static 'img/icon-laptop-logo.png' %}">
-  <title>Laptop Determination With AHP</title>
-
-  {% include "snippets/styles.html" %}
-
+  <title>Laptop Selection System - AHP Decision Support</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Clean Styles -->
+    <link rel="stylesheet" href="{% static 'css/clean_styles.css' %}?v=3.0">
+  
+  {% block extra_css %}{% endblock %}
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
+<body class="{% block body_class %}{% endblock %}">
+  <div class="main-wrapper">
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Breadcrumb -->
+        {% block breadcrumb %}{% endblock %}
+        
+        <!-- Page Header -->
+        {% block page_header %}{% endblock %}
+        
+        <!-- Main Content -->
+        {% block content %}{% endblock %}
+      </div>
+    </main>
 
+    <!-- Footer -->
+    <div class="footer-text">
+      <p>&copy; 2025 Laptop Selection System. Built with Django & AHP Algorithm.</p>
+    </div>
+  </div>
 
-<!-- Navbar -->
-{% include "snippets/navbar.html" %}
-<!-- /.navbar -->
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Clean JavaScript for form interactions
+    $(document).ready(function() {
+      // Initialize DataTable if present
+      if ($.fn.DataTable) {
+        $('#laptop-table').DataTable({
+          responsive: true,
+          pageLength: 10,
+          language: {
+            search: "Search:",
+            lengthMenu: "Show _MENU_ entries",
+            info: "Showing _START_ to _END_ of _TOTAL_ entries",
+            paginate: {
+              first: "First",
+              last: "Last",
+              next: "Next",
+              previous: "Previous"
+            }
+          },
+          dom: '<"top"lf>rt<"bottom"ip><"clear">',
+          initComplete: function() {
+            // Apply custom styling to pagination
+            $('.dataTables_paginate .paginate_button').addClass('page-item');
+            $('.dataTables_paginate .paginate_button a').addClass('page-link');
+            $('.dataTables_paginate .paginate_button.current').addClass('active');
+            $('.dataTables_paginate .paginate_button.disabled').addClass('disabled');
+          }
+        });
+      }
 
-<!-- Main Sidebar Container -->
+      // Priority Management System
+      const PriorityManager = {
+        TOTAL_PRIORITIES: 5,
+        EMPTY_VALUE: 'empty',
+        NOTIFICATION_MESSAGE: 'If you change one priority level, you must change all of them',
+        
+        priorities: [],
+        
+        init() {
+          for (let i = 1; i <= this.TOTAL_PRIORITIES; i++) {
+            this.priorities[i] = $(`#priority_${i}`).val();
+          }
+        },
+        
+        updateOption(priorityIndex, selectedValue) {
+          if (selectedValue !== this.EMPTY_VALUE) {
+            for (let i = 1; i <= this.TOTAL_PRIORITIES; i++) {
+              if (i !== priorityIndex) {
+                $(`#priority_${i} option[value='${selectedValue}']`).remove();
+              }
+            }
+          } else {
+            const previousChoice = this.priorities[priorityIndex];
+            if (previousChoice !== this.EMPTY_VALUE) {
+              const option = `<option value='${previousChoice}'>${previousChoice}</option>`;
+              for (let i = 1; i <= this.TOTAL_PRIORITIES; i++) {
+                if (i !== priorityIndex) {
+                  $(`#priority_${i}`).append(option);
+                }
+              }
+            }
+          }
+        },
+        
+        showNotification() {
+          $('#notification')
+            .text(this.NOTIFICATION_MESSAGE)
+            .addClass('show notification info')
+            .delay(3000)
+            .queue(function() {
+              $(this).removeClass('show').dequeue();
+            });
+        },
+        
+        updateSearchButtonState() {
+          const allEmpty = this.priorities.slice(1).every(val => val === this.EMPTY_VALUE);
+          const allFilled = this.priorities.slice(1).every(val => val !== this.EMPTY_VALUE);
+          
+          if (allEmpty || allFilled) {
+            $('#search-btn').removeAttr('disabled');
+          } else {
+            $('#search-btn').attr('disabled', 'disabled');
+          }
+        },
+        
+        handlePriorityChange(priorityIndex) {
+          const selectedValue = $(`#priority_${priorityIndex}`).val();
+          
+          this.priorities[priorityIndex] = selectedValue;
+          this.updateOption(priorityIndex, selectedValue);
+          this.showNotification();
+          this.updateSearchButtonState();
+        }
+      };
 
-<!-- Sidebar Menu -->
-{% include "snippets/sidebar.html" %}
-<!-- End of Sidebar -->
+      // Initialize priority manager
+      PriorityManager.init();
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper background-abu-abu">
+      // Bind priority change events
+      for (let i = 1; i <= PriorityManager.TOTAL_PRIORITIES; i++) {
+        $(`#priority_${i}`).change(function() {
+          PriorityManager.handlePriorityChange(i);
+        });
+      }
 
+      // Reset button handler
+      $('#reset-btn').click(function() {
+        location.reload();
+      });
+      
+      // Calculation toggle handler
+      $('#toggle-calculation').click(function() {
+        const detailElement = $('#calculation-details');
+        const isVisible = detailElement.is(':visible');
+        
+        if (isVisible) {
+          detailElement.slideUp();
+          $(this).text('Show Calculation');
+        } else {
+          detailElement.slideDown();
+          $(this).text('Hide Calculation');
+        }
+      });
 
-<!-- Content Header (Page header) -->
-{% block content_header %}
+      // Drag and Drop Priority System
+      if (typeof DragDropPriority !== 'undefined') {
+        DragDropPriority.init();
+      }
+    });
+  </script>
 
-{% endblock content_header %}
-<!-- /.content-header -->
+  <script>
+    // Drag and Drop Priority System
+    const DragDropPriority = {
+      draggedElement: null,
+      draggedCriteria: null,
+      draggedSlot: null,
+      priorityAssignments: {},
 
-<!-- Main content -->
-{% block content_main %}
+      init() {
+        this.setupDragAndDrop();
+        this.initializeDefaultPriorities();
+      },
 
-{% endblock content_main %}
+      setupDragAndDrop() {
+        // Make priority item wrappers draggable and droppable
+        for (const wrapper of document.querySelectorAll('.priority-item-wrapper')) {
+          wrapper.addEventListener('dragstart', this.handleWrapperDragStart.bind(this));
+          wrapper.addEventListener('dragend', this.handleWrapperDragEnd.bind(this));
+          wrapper.addEventListener('dragover', this.handleDragOver.bind(this));
+          wrapper.addEventListener('drop', this.handleDrop.bind(this));
+          wrapper.addEventListener('dragenter', this.handleDragEnter.bind(this));
+          wrapper.addEventListener('dragleave', this.handleDragLeave.bind(this));
+        }
+      },
 
-</div>
-<!-- /.content-wrapper -->
+      handleWrapperDragStart(e) {
+        this.draggedElement = e.target;
+        this.draggedCriteria = e.target.dataset.criteria;
+        this.draggedPriority = e.target.dataset.priority;
+        e.target.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', e.target.outerHTML);
+      },
 
-{% include "snippets/footer.html" %}
+      handleWrapperDragEnd(e) {
+        e.target.classList.remove('dragging');
+        this.draggedElement = null;
+        this.draggedCriteria = null;
+        this.draggedPriority = null;
+      },
 
+      handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      },
 
-</div>
-<!-- ./wrapper -->
+      handleDragEnter(e) {
+        e.preventDefault();
+        const wrapper = e.target.closest('.priority-item-wrapper');
+        if (wrapper && wrapper !== this.draggedElement) {
+          wrapper.classList.add('drag-over');
+        }
+      },
 
-{% include "snippets/scripts.html" %}
+      handleDragLeave(e) {
+        e.target.closest('.priority-item-wrapper')?.classList.remove('drag-over');
+      },
 
+      handleDrop(e) {
+        e.preventDefault();
+        const targetWrapper = e.target.closest('.priority-item-wrapper');
+        
+        if (!targetWrapper || targetWrapper === this.draggedElement) return;
+        
+        targetWrapper.classList.remove('drag-over');
+        
+        // Swap the priority assignments
+        this.handleWrapperReorder(targetWrapper);
+      },
+
+      handleWrapperReorder(targetWrapper) {
+        const targetPriority = targetWrapper.dataset.priority;
+        const draggedPriority = this.draggedPriority;
+        
+        // Get the criteria from both wrappers
+        const draggedCriteria = this.draggedCriteria;
+        const targetCriteria = targetWrapper.dataset.criteria;
+        
+        // Swap the criteria between wrappers
+        this.priorityAssignments[targetPriority] = draggedCriteria;
+        this.priorityAssignments[draggedPriority] = targetCriteria;
+        
+        // Update the visual representation by swapping the entire wrappers
+        this.swapWrappers(this.draggedElement, targetWrapper);
+        
+        // Update all priority numbers based on new order
+        this.updatePriorityNumbers();
+        
+        // Update hidden form inputs
+        this.updateFormInputs();
+      },
+
+      swapWrappers(wrapper1, wrapper2) {
+        // Get the parent container
+        const parent = wrapper1.parentNode;
+        
+        // Create temporary placeholder
+        const temp = document.createElement('div');
+        
+        // Insert temp before wrapper2
+        parent.insertBefore(temp, wrapper2);
+        
+        // Move wrapper1 to wrapper2's position
+        parent.insertBefore(wrapper1, wrapper2);
+        
+        // Move wrapper2 to wrapper1's original position
+        parent.insertBefore(wrapper2, temp);
+        
+        // Remove temp
+        parent.removeChild(temp);
+        
+        // Update data attributes
+        wrapper1.dataset.priority = this.draggedPriority;
+        wrapper1.dataset.criteria = this.priorityAssignments[this.draggedPriority];
+        wrapper2.dataset.priority = this.draggedElement.dataset.priority;
+        wrapper2.dataset.criteria = this.priorityAssignments[this.draggedElement.dataset.priority];
+        
+        // Update priority numbers
+        wrapper1.querySelector('.priority-number').textContent = this.draggedPriority;
+        wrapper2.querySelector('.priority-number').textContent = this.draggedElement.dataset.priority;
+      },
+
+      updatePriorityNumbers() {
+        // Update all priority numbers based on current order
+        const wrappers = document.querySelectorAll('.priority-item-wrapper');
+        wrappers.forEach((wrapper, index) => {
+          const priorityNumber = index + 1;
+          wrapper.dataset.priority = priorityNumber;
+          wrapper.querySelector('.priority-number').textContent = priorityNumber;
+          wrapper.querySelector('.priority-number').dataset.priority = priorityNumber;
+        });
+      },
+
+      assignCriteriaToSlot(slot, criteria, priority) {
+        // Create assigned criteria element
+        const assignedElement = document.createElement('div');
+        assignedElement.className = 'priority-item-assigned';
+        assignedElement.innerHTML = `
+          <div class="criteria-icon">${this.getCriteriaIcon(criteria)}</div>
+          <span>${criteria}</span>
+          <button type="button" class="remove-criteria" onclick="DragDropPriority.removeCriteria('${priority}')">×</button>
+        `;
+        
+        // Add assigned element to slot
+        slot.appendChild(assignedElement);
+        
+        // Mark slot as occupied
+        slot.classList.add('occupied');
+        
+        // Store assignment
+        this.priorityAssignments[priority] = criteria;
+      },
+
+      updateSlotDisplay(slot, criteria) {
+        // Remove existing assigned element
+        const existingAssigned = slot.querySelector('.priority-item-assigned');
+        if (existingAssigned) {
+          existingAssigned.remove();
+        }
+        
+        if (criteria) {
+          // Add new assigned element
+          this.assignCriteriaToSlot(slot, criteria, slot.dataset.priority);
+        } else {
+          // Mark slot as unoccupied
+          slot.classList.remove('occupied');
+        }
+      },
+
+      removeCriteria(priority) {
+        const slot = document.querySelector(`[data-priority="${priority}"]`);
+        const assignedElement = slot.querySelector('.priority-item-assigned');
+        
+        // Get criteria name
+        const criteria = this.priorityAssignments[priority];
+        
+        // Show criteria in pool again
+        const criteriaElement = document.querySelector(`[data-criteria="${criteria}"]`);
+        if (criteriaElement) {
+          criteriaElement.style.display = 'flex';
+        }
+        
+        // Remove assigned element
+        assignedElement.remove();
+        
+        // Mark slot as unoccupied
+        slot.classList.remove('occupied');
+        
+        // Remove assignment
+        delete this.priorityAssignments[priority];
+        
+        // Update hidden form inputs
+        this.updateFormInputs();
+      },
+
+      getCriteriaIcon(criteria) {
+        const icons = {
+          'Price': '💰',
+          'RAM': '⚡',
+          'SSD': '💾',
+          'HDD': '🗄️',
+          'CPU': '🖥️'
+        };
+        return icons[criteria] || '📋';
+      },
+
+      initializeDefaultPriorities() {
+        // Set default priorities: Price, RAM, SSD, HDD, CPU
+        const defaultOrder = ['Price', 'RAM', 'SSD', 'HDD', 'CPU'];
+        
+        for (const [index, criteria] of defaultOrder.entries()) {
+          const priority = (index + 1).toString();
+          this.priorityAssignments[priority] = criteria;
+        }
+        
+        // Initialize priority numbers based on current order
+        this.updatePriorityNumbers();
+        this.updateFormInputs();
+      },
+
+      updateFormInputs() {
+        // Update hidden form inputs based on current order of wrappers
+        const wrappers = document.querySelectorAll('.priority-item-wrapper');
+        wrappers.forEach((wrapper, index) => {
+          const priorityNumber = index + 1;
+          const criteria = wrapper.dataset.criteria;
+          const input = document.getElementById(`priority_${priorityNumber}`);
+          if (input) {
+            input.value = criteria || '';
+          }
+        });
+      },
+
+      showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type === 'warning' ? 'warning' : 'info'} alert-dismissible fade show`;
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.zIndex = '9999';
+        notification.innerHTML = `
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 3000);
+      }
+    };
+  </script>
+  
+  {% block extra_js %}{% endblock %}
 </body>
 </html>

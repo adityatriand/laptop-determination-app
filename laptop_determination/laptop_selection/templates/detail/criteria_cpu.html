@@ -1,0 +1,134 @@
+{% load laptop_selection_extras %}
+<h5>CPU Criteria</h5>
+<div>
+  <p class="text-left" style="font-weight:bold;">Importance Level and Pairwise Comparison</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
+        {% for data in alternatives %}
+          <th>Laptop {{ forloop.counter }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>Laptop {{ forloop.counter }}</td>
+
+        {% for data2 in data.cpu.initial %}
+          <td>{{ data2 }}</td>
+        {% endfor %}
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="text-left" style="font-weight:bold;">Normalization Matrix</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
+
+        {% for data in alternatives %}
+          <th>Laptop {{ forloop.counter }}</th>
+        {% endfor %}
+
+        <th>Weights (W)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>Laptop {{ forloop.counter }}</td>
+
+        {% for data2 in data.cpu.normalized %}
+          <td>{{ data2|format_float }}</td>
+        {% endfor %}
+
+        <td>{{ data.cpu.weight }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="text-left" style="font-weight:bold;">Weighted Matrix</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
+
+        {% for data in alternatives %}
+          <th>Laptop {{ forloop.counter }}</th>
+        {% endfor %}
+
+        <th>WSV</th>
+        <th>CV</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>Laptop {{ forloop.counter }}</td>
+
+        {% for data2 in data.cpu.weighted %}
+          <td>{{ data2|format_float }}</td>
+        {% endfor %}
+
+        <td>{{ data.cpu.wsv }}</td>
+        <td>{{ data.cpu.cv }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="text-left" style="font-weight:bold;">Conclusion for CPU</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>CPU</th>
+        {% for data in alternatives %}
+          <th>Laptop {{ forloop.counter }}</th>
+        {% endfor %}
+        <th>Weight (W)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>Laptop {{ forloop.counter }}</td>
+
+        {% for data2 in data.cpu.initial %}
+          <td>{{ data2|format_float }}</td>
+        {% endfor %}
+        
+        <td>{{ data.cpu.weight }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+   <div class="table-responsive">
+   <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Lambda Max</td>
+        <td>{{ alternatives.0.cpu.lambda_max }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Index (CI)</td>
+        <td>{{ alternatives.0.cpu.ci|format_float_precise }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Ration (CR)</td>
+        <td>{{ alternatives.0.cpu.cr|format_float_precise }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>

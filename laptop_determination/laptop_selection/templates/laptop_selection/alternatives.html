@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load laptop_selection_extras %}
+
+{% block body_class %}alternatives-page{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item active">Laptop Alternatives</li>
+</ol>
+{% endblock breadcrumb %}
+
+{% block page_header %}
+<div class="text-center mb-4">
+  <h1>Laptop Alternatives</h1>
+  <p class="text-light">Browse all available laptops in our database</p>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<!-- Important Disclaimer -->
+<div class="alert alert-warning" role="alert" style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); border: 2px solid #f39c12; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);">
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <div style="font-size: 2rem;">⚠️</div>
+    <div>
+      <h4 style="color: #8b4513; margin: 0 0 0.5rem 0; font-weight: 700;">Important Disclaimer</h4>
+      <p style="margin: 0; color: #8b4513; font-weight: 500; line-height: 1.5;">
+        <strong>This database is for reference only.</strong> Laptop specifications, prices, and availability may be outdated or incorrect. 
+        <strong>Always verify information</strong> from official sources before making any purchase decisions.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="alternatives-content">
+  <div class="card">
+    <div class="card-header">
+      <h3>Laptop Database</h3>
+      <p class="mb-0 text-light">Browse and search through our comprehensive laptop collection</p>
+    </div>
+    <div class="card-body">
+      <!-- Desktop Table -->
+      <div class="table-container">
+        <table id="laptop-table" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Brand</th>
+              <th>Product Name</th>
+              <th>CPU (GHz)</th>
+              <th>RAM (GB)</th>
+              <th>Price (IDR)</th>
+              <th>HDD (GB)</th>
+              <th>SSD (GB)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for laptop in laptops %}
+            <tr>
+              <td>{{ laptop.id_laptop }}</td>
+              <td><strong>{{ laptop.company }}</strong></td>
+                      <td>
+                        <span class="laptop-name" title="{{ laptop.product }}">
+                          {{ laptop.product|laptop_alias }}
+                        </span>
+                      </td>
+              <td class="text-right">{{ laptop.cpu }}</td>
+              <td class="text-right">{{ laptop.ram }}</td>
+              <td class="text-right">{{ laptop.price|format_rupiah }}</td>
+              <td class="text-right">{{ laptop.hdd|convert_memory }}</td>
+              <td class="text-right">{{ laptop.ssd|convert_memory }}</td>
+            </tr>
+            {% endfor %}     
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Search and Filter -->
+      <div class="mobile-filters">
+        <div class="mobile-search-box">
+          <input type="text" id="mobile-search" placeholder="Search laptops..." class="mobile-search-input">
+          <div class="mobile-search-icon">🔍</div>
+        </div>
+        
+        <div class="mobile-brand-filter">
+          <select id="mobile-brand-filter" class="mobile-brand-select">
+            <option value="">All Brands</option>
+            {% for brand in brands %}
+              <option value="{{ brand.company }}">{{ brand.company }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="mobile-results-count">
+          <span id="mobile-results-count">{{ laptops|length }}</span> laptops found
+        </div>
+      </div>
+
+      <!-- Mobile Cards -->
+      <div class="mobile-cards" id="mobile-cards-container">
+        {% for laptop in laptops %}
+        <div class="mobile-card" data-brand="{{ laptop.company|lower }}" data-search="{{ laptop.company|lower }} {{ laptop.product|lower }}">
+                  <div class="mobile-card-header">
+                    <h3 class="mobile-card-title">{{ laptop.company }} {{ laptop.product|laptop_alias }}</h3>
+                    <span class="mobile-card-id">#{{ laptop.id_laptop }}</span>
+                  </div>
+          
+          <div class="mobile-card-specs">
+            <div class="mobile-spec-item">
+              <span class="mobile-spec-label">CPU</span>
+              <span class="mobile-spec-value">{{ laptop.cpu }} GHz</span>
+            </div>
+            <div class="mobile-spec-item">
+              <span class="mobile-spec-label">RAM</span>
+              <span class="mobile-spec-value">{{ laptop.ram }} GB</span>
+            </div>
+            <div class="mobile-spec-item">
+              <span class="mobile-spec-label">SSD</span>
+              <span class="mobile-spec-value">{{ laptop.ssd|convert_memory }}</span>
+            </div>
+            <div class="mobile-spec-item">
+              <span class="mobile-spec-label">HDD</span>
+              <span class="mobile-spec-value">{{ laptop.hdd|convert_memory }}</span>
+            </div>
+          </div>
+          
+          <div class="mobile-card-price">
+            {{ laptop.price|format_rupiah }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="/laptop-selection/search/" class="btn btn-primary btn-large">Start Your Search</a>
+  </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
+<script>
+$(document).ready(function() {
+    // Mobile Search and Filter Functionality
+    const mobileSearch = $('#mobile-search');
+    const mobileBrandFilter = $('#mobile-brand-filter');
+    const mobileCards = $('.mobile-card');
+    const resultsCount = $('#mobile-results-count');
+    
+    function filterMobileCards() {
+        const searchTerm = mobileSearch.val().toLowerCase();
+        const selectedBrand = mobileBrandFilter.val().toLowerCase();
+        let visibleCount = 0;
+        
+        mobileCards.each(function() {
+            const $card = $(this);
+            const cardBrand = $card.data('brand');
+            const cardSearch = $card.data('search');
+            
+            let showCard = true;
+            
+            // Filter by search term
+            if (searchTerm && !cardSearch.includes(searchTerm)) {
+                showCard = false;
+            }
+            
+            // Filter by brand
+            if (selectedBrand && cardBrand !== selectedBrand) {
+                showCard = false;
+            }
+            
+            if (showCard) {
+                $card.removeClass('hidden filtered-out');
+                $card.css('display', 'block');
+                visibleCount++;
+            } else {
+                $card.addClass('hidden');
+                $card.css('display', 'none');
+            }
+        });
+        
+        // Update results count
+        resultsCount.text(visibleCount);
+        
+        // Show no results message if needed
+        if (visibleCount === 0) {
+            if ($('#no-results-message').length === 0) {
+                $('#mobile-cards-container').append(`
+                    <div id="no-results-message" class="mobile-no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <h4>No laptops found</h4>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `);
+            }
+        } else {
+            $('#no-results-message').remove();
+        }
+    }
+    
+    // Bind events
+    mobileSearch.on('input', filterMobileCards);
+    mobileBrandFilter.on('change', filterMobileCards);
+    
+    // Clear filters button
+    if ($('#clear-filters').length === 0) {
+        $('.mobile-filters').append(`
+            <div class="text-center mt-2">
+                <button id="clear-filters" class="btn btn-outline btn-sm">Clear Filters</button>
+            </div>
+        `);
+    }
+    
+    $('#clear-filters').on('click', function() {
+        mobileSearch.val('');
+        mobileBrandFilter.val('');
+        filterMobileCards();
+    });
+});
+</script>
+
+<style>
+.mobile-no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.no-results-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.mobile-no-results h4 {
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.mobile-no-results p {
+    font-size: 0.9rem;
+}
+</style>
+{% endblock extra_js %}
+
