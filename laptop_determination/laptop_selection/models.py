@@ -9,8 +9,8 @@ from django.db import models
 
 class Laptops(models.Model):
     id_laptop = models.AutoField(primary_key=True)
-    company = models.CharField(max_length=9, blank=True, null=True)
-    product = models.CharField(max_length=45, blank=True, null=True)
+    company = models.CharField(max_length=50, blank=True, null=True)
+    product = models.CharField(max_length=200, blank=True, null=True)
     cpu = models.FloatField(blank=True, null=True)
     ram = models.FloatField(blank=True, null=True)
     price = models.IntegerField(blank=True, null=True)
