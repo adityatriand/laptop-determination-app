@@ -1,0 +1,64 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: laptop-db-prod
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME:-db_spk}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_USER: ${DATABASE_USER:-django_user}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-django_password}
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
+      timeout: 20s
+      retries: 10
+      interval: 30s
+      start_period: 30s
+    networks:
+      - laptop-network
+
+  web:
+    build: .
+    container_name: laptop-web-prod
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - static_volume:/app/laptop_determination/static
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py migrate &&
+             gunicorn --bind 0.0.0.0:8000 wsgi:application"
+    networks:
+      - laptop-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: laptop-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/app/laptop_determination/static
+    depends_on:
+      - web
+    networks:
+      - laptop-network
+
+volumes:
+  mysql_data:
+  static_volume:
+
+networks:
+  laptop-network:
+    driver: bridge

@@ -8,7 +8,7 @@ A web-based Decision Support System (DSS) for laptop selection using the Analyti
 - **Laptop Database**: Comprehensive database of 573 unique laptops with specifications (CPU, RAM, Price, SSD, HDD)
 - **Interactive Search**: User-friendly interface for setting criteria priorities with real-time validation
 - **Ranking Results**: Detailed ranking results with consistency ratio validation and calculation details
-- **Responsive Design**: Modern UI using AdminLTE template framework
+- **Responsive Design**: Clean, modern UI with custom CSS and responsive design
 - **Docker Support**: Fully containerized application with Docker Compose
 - **Environment Configuration**: Secure environment variable management with `.env` files
 
@@ -39,7 +39,7 @@ The system evaluates laptops based on five key criteria:
 
 - **Backend**: Django 3.2.8 (Python 3.8+)
 - **Database**: MySQL 8.0
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+), Bootstrap 4, AdminLTE
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+), Custom CSS Framework
 - **Containerization**: Docker & Docker Compose
 - **Environment Management**: python-decouple for secure configuration
 - **Data Processing**: Pandas for dataset processing and cleaning
@@ -176,6 +176,8 @@ laptop-determination-app/
 - **Clean Architecture**: Removed redundant `config/` folder, moved files to proper Django structure
 - **Modern JavaScript**: Refactored JavaScript code to use ES6+ features and clean architecture
 - **Template Updates**: All HTML templates updated with consistent English naming conventions
+- **UI Modernization**: Replaced AdminLTE with custom, clean CSS framework
+- **Code Cleanup**: Removed unused CSS classes, functions, and files for better maintainability
 
 ### Environment & Configuration
 - **Environment Variables**: Secure configuration management with `.env` files
@@ -187,6 +189,8 @@ laptop-determination-app/
 - **Error Handling**: Enhanced error handling and validation
 - **Template Filters**: Robust template filters with proper error handling
 - **AHP Algorithm**: Fixed division by zero errors and improved algorithm robustness
+- **Performance**: Removed unused CSS classes and JavaScript for faster loading
+- **Maintainability**: Cleaned up codebase by removing unused files and functions
 
 ## AHP Algorithm Details
 
@@ -295,5 +299,5 @@ This project is licensed under the MIT License.
 ## Acknowledgments
 
 - Django framework for the web framework
-- AdminLTE for the UI template
 - AHP methodology for decision support algorithms
+- Custom CSS framework for modern, responsive design

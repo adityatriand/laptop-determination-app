@@ -1,25 +1,33 @@
 services:
   db:
     image: mysql:8.0
-    restart: always
+    container_name: laptop-db
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DATABASE_NAME:-db_spk}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
       MYSQL_USER: ${DATABASE_USER:-django_user}
       MYSQL_PASSWORD: ${DATABASE_PASSWORD:-django_password}
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./db_init:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
       timeout: 20s
       retries: 10
+      interval: 30s
+      start_period: 30s
+    networks:
+      - laptop-network
 
   web:
     build: .
-    restart: always
+    container_name: laptop-web
+    restart: unless-stopped
     ports:
       - "8000:8000"
     depends_on:
@@ -29,9 +37,13 @@ services:
       - .env
     volumes:
       - .:/app
-    command: >
-      sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+    command: ["/app/start.sh"]
+    networks:
+      - laptop-network
 
 volumes:
   mysql_data:
+
+networks:
+  laptop-network:
+    driver: bridge
