@@ -3,10 +3,10 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: db_spk
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_USER: django_user
-      MYSQL_PASSWORD: django_password
+      MYSQL_DATABASE: ${DATABASE_NAME:-db_spk}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_USER: ${DATABASE_USER:-django_user}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD:-django_password}
     ports:
       - "3306:3306"
     volumes:
@@ -25,18 +25,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      - DEBUG=1
-      - DATABASE_NAME=db_spk
-      - DATABASE_USER=django_user
-      - DATABASE_PASSWORD=django_password
-      - DATABASE_HOST=db
-      - DATABASE_PORT=3306
+    env_file:
+      - .env
     volumes:
       - .:/app
     command: >
-      sh -c "python laptop_determination/manage.py migrate &&
-             python laptop_determination/manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
 
 volumes:
   mysql_data:

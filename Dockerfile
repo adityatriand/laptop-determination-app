@@ -19,4 +19,5 @@ COPY . /app/
 
 EXPOSE 8000
 
-CMD ["python", "laptop_determination/manage.py", "runserver", "0.0.0.0:8000"]
+WORKDIR /app/laptop_determination
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
