@@ -1,0 +1,42 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: db_spk
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: django_user
+      MYSQL_PASSWORD: django_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  web:
+    build: .
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DEBUG=1
+      - DATABASE_NAME=db_spk
+      - DATABASE_USER=django_user
+      - DATABASE_PASSWORD=django_password
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+    volumes:
+      - .:/app
+    command: >
+      sh -c "python laptop_determination/manage.py migrate &&
+             python laptop_determination/manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  mysql_data:
