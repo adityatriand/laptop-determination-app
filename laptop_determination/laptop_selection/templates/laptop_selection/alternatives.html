@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load laptop_selection_extras %}
+
+{% block content_header %}
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Data Alternatif</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">Data Alternatif</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+{% endblock content_header %}
+
+{% block content_main %}
+<section class="content">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Berikut dataset laptop yang kami pakai untuk menentukan laptop mana yang sesuai dengan keinginan pengguna : </h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="table_dataset" class="table table-bordered table-hover table-responsif">
+            <thead class="background-hijau-muda text-center" style="color:white;">
+              <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Nama Laptop</th>
+                <th>CPU (GHz)</th>
+                <th>RAM (GB)</th>
+                <th>Harga (Rp)</th>
+                <th>HDD (GB)</th>
+                <th>SSD (GB)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for laptop in laptops %}
+              <tr>
+                <td>{{laptop.id_laptop }}</td>
+                <td>{{laptop.company}}</td>
+                <td>{{laptop.product}}</td>
+                <td class="text-right">{{laptop.cpu}}</td>
+                <td class="text-right">{{laptop.ram}}</td>
+                <td class="text-right">{{laptop.price}}</td>
+                <td class="text-right">{{ laptop.hdd|convert_memory }}</td>
+                <td class="text-right">{{ laptop.ssd|convert_memory }}</td>
+              </tr>
+              {% endfor %}     
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content_main %}
+

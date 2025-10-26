@@ -1,0 +1,120 @@
+{% load laptop_selection_extras %}
+<h5>Kriteria KRITERIA</h5>
+<div>
+<p class="text-left" style="font-weight:bold;">Tingkat Kepentingan lalu Pairwaise Comparison</p>
+<table class="table table-bordered table-responsif">
+  <thead>
+    <tr>
+      <th>KRITERIA</th>
+      {% for data in search_data %}
+      <th>{{data.obj.choice}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for data in search_data %}
+    <tr>
+      <td>{{data.obj.choice}}</td>
+      <td>{{data|format_criteria_0:"initial"}}</td>
+      <td>{{data|format_criteria_1:"initial"}}</td>
+      <td>{{data|format_criteria_2:"initial"}}</td>
+      <td>{{data|format_criteria_3:"initial"}}</td>
+      <td>{{data|format_criteria_4:"initial"}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="text-left" style="font-weight:bold;">Normalisasi Matriks</p>
+<table class="table table-bordered table-responsif">
+  <thead>
+    <tr>
+      <th>KRITERIA</th>
+      {% for data in search_data %}
+      <th>{{data.obj.choice}}</th>
+      {% endfor %}
+      <th>Weights (W)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for data in search_data %}
+    <tr>
+      <td>{{data.obj.choice}}</td>
+      <td>{{data|format_criteria_0:"normalized"}}</td>
+      <td>{{data|format_criteria_1:"normalized"}}</td>
+      <td>{{data|format_criteria_2:"normalized"}}</td>
+      <td>{{data|format_criteria_3:"normalized"}}</td>
+      <td>{{data|format_criteria_4:"normalized"}}</td>
+      <td>{{data|format_criteria_variable:"weight"}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="text-left" style="font-weight:bold;">Matriks Perkalian Bobot</p>
+<table class="table table-bordered table-size table-responsif">
+  <thead>
+    <tr>
+      <th>KRITERIA</th>
+      {% for data in search_data %}
+      <th>{{data.obj.choice}}</th>
+      {% endfor %}
+      <th>WSV</th>
+      <th>CV</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for data in search_data %}
+    <tr>
+      <td>{{data.obj.choice}}</td>
+      <td>{{data|format_criteria_0:"normalized"}}</td>
+      <td>{{data|format_criteria_1:"normalized"}}</td>
+      <td>{{data|format_criteria_2:"normalized"}}</td>
+      <td>{{data|format_criteria_3:"normalized"}}</td>
+      <td>{{data|format_criteria_4:"normalized"}}</td>
+      <td>{{data|format_criteria_variable:"wsv"}}</td>
+      <td>{{data|format_criteria_variable:"cv"}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="text-left" style="font-weight:bold;">Kesimpulan untuk Kriteria</p>
+<table class="table table-bordered table-size table-responsif">
+  <thead>
+    <tr>
+      <th>KRITERIA</th>
+      {% for data in search_data %}
+      <th>{{data.obj.choice}}</th>
+      {% endfor %}
+      <th>Weigth (W)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for data in search_data %}
+    <tr>
+      <td>{{data.obj.choice}}</td>
+      <td>{{data|format_criteria_0:"normalized"}}</td>
+      <td>{{data|format_criteria_1:"normalized"}}</td>
+      <td>{{data|format_criteria_2:"normalized"}}</td>
+      <td>{{data|format_criteria_3:"normalized"}}</td>
+      <td>{{data|format_criteria_4:"normalized"}}</td>
+      <td>{{data|format_criteria_variable:"weight"}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+ <table class="table table-bordered">
+  <tbody>
+    <tr>
+      <td>Lambda Max</td>
+      <td>{{search_data.0|format_criteria_variable:"lambda_max"}}</td>
+    </tr>
+    <tr>
+      <td>Consistency Index (CI)</td>
+      <td>{{search_data.0|format_criteria_variable:"ci"}}</td>
+    </tr>
+    <tr>
+      <td>Consistency Ration (CR)</td>
+      <td>{{search_data.0|format_criteria_variable:"cr"}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>

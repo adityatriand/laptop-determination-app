@@ -1,0 +1,120 @@
+{% load laptop_selection_extras %}
+<h5>Kriteria Harga</h5>
+<div>
+  <p class="text-left" style="font-weight:bold;">Tingkat Kepentingan lalu Pairwaise Comparison</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatives %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>{{ data.obj.product }}</td>
+
+        {% for data2 in data.price.initial %}
+          <td>{{ data2 }}</td>
+        {% endfor %}
+
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Normalisasi Matriks</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatives %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+        <th>Weights (W)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>{{ data.obj.product }}</td>
+
+        {% for data2 in data.price.normalized %}
+          <td>{{ data2|format_float }}</td>
+        {% endfor %}
+
+        <td>{{ data.price.weight }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Matriks Perkalian Bobot</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatives %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+        <th>WSV</th>
+        <th>CV</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>{{ data.obj.product }}</td>
+
+        {% for data2 in data.price.weighted %}
+          <td>{{ data2|format_float }}</td>
+        {% endfor %}
+
+        <td>{{ data.price.wsv }}</td>
+        <td>{{ data.price.cv }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p class="text-left" style="font-weight:bold;">Kesimpulan untuk Harga</p>
+  <table class="table table-bordered table-size table-responsif">
+    <thead>
+      <tr>
+        <th>Harga</th>
+        {% for data in alternatives %}
+        <th>{{ data.obj.product }}</th>
+        {% endfor %}
+        <th>Weight (W)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in alternatives %}
+      <tr>
+        <td>{{ data.obj.product }}</td>
+
+        {% for data2 in data.price.initial %}
+          <td>{{ data2|format_float }}</td>
+        {% endfor %}
+
+        <td>{{ data.price.weight }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Lambda Max</td>
+        <td>{{ alternatives.0.price.lambda_max }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Index (CI)</td>
+        <td>{{ alternatives.0.price.ci|format_float_precise }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Ration (CR)</td>
+        <td>{{ alternatives.0.price.cr|format_float_precise }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

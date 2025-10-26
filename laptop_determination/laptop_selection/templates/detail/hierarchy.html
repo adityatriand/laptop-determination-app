@@ -1,0 +1,31 @@
+{% load laptop_selection_extras %}
+<table class="table table-bordered">
+<caption style="caption-side:top;">Tujuan</caption>
+  <thead>
+    <tr>
+      <th>Penentuan Laptop</th>
+    </tr>
+  </thead>
+</table>
+<table class="table table-bordered">
+<caption style="caption-side:top;">Kriteria</caption>
+  <thead>
+    <tr>
+      <th>CPU</th>
+      <th>Harga</th>
+      <th>RAM</th>
+      <th>SSD</th>
+      <th>HDD</th>
+    </tr>
+  </thead>
+</table>
+<table class="table table-bordered table-size">
+  <caption style="caption-side:top;">Alternatif</caption>
+  <thead class="table-responsif">
+    <tr>
+      {% for data in alternatives %}
+      <th>{{ data.obj.product }}<br>(id:{{ data.obj.id_laptop }})</th>
+      {% endfor %}
+    </tr>
+  </thead>
+</table>

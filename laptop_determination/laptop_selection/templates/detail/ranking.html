@@ -1,0 +1,42 @@
+{% load laptop_selection_extras %}
+<div>
+<p class="text-left" style="font-weight:bold;">Perangkingan</p>
+<table class="table table-bordered table-size table-responsif">
+  <thead>
+    <tr>
+      <th>Bobot Gabungan Secara Keseluruhan</th>
+      {% for data in alternatives %}
+      <th>{{ data.obj.product }} {{data.obj.id_laptop}}</th>
+      {% endfor %}
+      <th>Bobot Kriteria</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for data in ranking %}
+    <tr>
+      <td>{{ data.choice }}</td>
+
+      {% for data2 in alternatives %}
+      <td>{{ data|format_weight:forloop.counter0 }}</td>
+      {% endfor %}
+
+      <td>{{ data.weight_value|format_float }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td>Perangkingan</td>
+      {% for data in ranking_alternatives %}
+      <td>{{ data.ranking|format_float }}</td>
+      {% endfor %}
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      {% for data in ranking_alternatives %}
+      <td>{{ data.rank }}</td>
+      {% endfor %}
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>
