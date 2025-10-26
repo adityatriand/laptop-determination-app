@@ -8,8 +8,18 @@ import math
 def alternatives(request):
     """Display all available laptop alternatives"""
     laptops = models.Laptops.objects.all()
+    
+    # Get unique brands for mobile filter
+    unique_brands = []
+    brand_names = []
+    for laptop in laptops:
+        if laptop.company not in brand_names:
+            unique_brands.append(laptop)
+            brand_names.append(laptop.company)
+    
     context = {
         'laptops': laptops,
+        'brands': unique_brands,
     }
     return render(request, 'laptop_selection/alternatives.html', context)
 
@@ -462,22 +472,40 @@ def calculate_criteria_importance_weights(criteria_data, choices):
 
 
 def determine_criteria_importance_level(criteria1, criteria2, choices):
-    """Determine importance level between two criteria"""
-    step = abs(
-        choices.index(criteria1['obj']['choice']) - 
-        choices.index(criteria2['obj']['choice'])
-    )
+    """Determine importance level between two criteria based on priority order"""
+    priority1 = choices.index(criteria1['obj']['choice'])
+    priority2 = choices.index(criteria2['obj']['choice'])
     
-    if step == 1:
-        return 2
-    elif step == 2:
-        return 4
-    elif step == 3:
-        return 5
-    elif step == 4:
-        return 6
+    # Lower index = higher priority (1st choice is most important)
+    if priority1 < priority2:
+        # criteria1 is more important than criteria2
+        step = priority2 - priority1
+        if step == 1:
+            return 2
+        elif step == 2:
+            return 4
+        elif step == 3:
+            return 5
+        elif step == 4:
+            return 6
+        else:
+            return 1
+    elif priority1 > priority2:
+        # criteria2 is more important than criteria1
+        step = priority1 - priority2
+        if step == 1:
+            return 1/2
+        elif step == 2:
+            return 1/4
+        elif step == 3:
+            return 1/5
+        elif step == 4:
+            return 1/6
+        else:
+            return 1
     else:
-        return 1
+        # Same priority
+            return 1
 
 
 def calculate_final_ranking(alternatives, criteria_data, n):
@@ -489,7 +517,7 @@ def calculate_final_ranking(alternatives, criteria_data, n):
         choice = criteria_data[i]["obj"]['choice']
         choices.append(choice)
         criteria_ranking.append({
-            "weight": {choice.lower(): [0] * n},
+            "weight": {},
             "choice": choice,
             "weight_value": 0
         })
@@ -497,18 +525,19 @@ def calculate_final_ranking(alternatives, criteria_data, n):
     for i in range(5):
         choice = choices[i].lower()
         criteria_ranking[i]["weight_value"] = criteria_data[i][choice]['weight']
+        criteria_ranking[i]["weight"][choice] = []
         for j in range(n):
-            criteria_ranking[i]["weight"][choice][j] = alternatives[j][choice]['weight']
+            criteria_ranking[i]["weight"][choice].append(alternatives[j][choice]['weight'])
 
     total_scores = []
     for i in range(n):
         alternative_score = 0
-        criteria_score = 0
         for j in range(5):
             choice = choices[j].lower()
-            criteria_score += criteria_ranking[j]["weight_value"]
-            alternative_score += criteria_ranking[j]["weight"][choice][i]
-        total_scores.append(alternative_score * criteria_score)
+            # AHP Final Score = Σ(Alternative Weight × Criteria Weight)
+            # This is the correct AHP methodology
+            alternative_score += criteria_ranking[j]["weight"][choice][i] * criteria_ranking[j]["weight_value"]
+        total_scores.append(alternative_score)
 
     alternatives_ranking = []
     for i in range(n):
@@ -518,10 +547,18 @@ def calculate_final_ranking(alternatives, criteria_data, n):
             "obj": None
         })
 
-    sorted_scores = sorted(total_scores, reverse=True)
-    for i in range(n):
-        alternatives_ranking[i]['rank'] = sorted_scores.index(alternatives_ranking[i]['score']) + 1
-        alternatives_ranking[i]['obj'] = alternatives[i]['obj']
+    # Create list of (score, index) tuples and sort by score descending
+    score_index_pairs = [(total_scores[i], i) for i in range(n)]
+    score_index_pairs.sort(key=lambda x: x[0], reverse=True)
+    
+    # Assign ranks properly, handling ties
+    current_rank = 1
+    for i, (score, original_index) in enumerate(score_index_pairs):
+        if i > 0 and score != score_index_pairs[i-1][0]:
+            # Different score, update rank
+            current_rank = i + 1
+        alternatives_ranking[original_index]['rank'] = current_rank
+        alternatives_ranking[original_index]['obj'] = alternatives[original_index]['obj']
 
     return {
         'criteria_ranking': criteria_ranking,

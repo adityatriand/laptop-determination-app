@@ -1,108 +1,129 @@
 {% extends "base.html" %}
 
-{% block content_header %}
-<div class="content-header">
-<div class="container-fluid">
-  <div class="row mb-2">
-    <div class="col-sm-6">
-      <h1 class="m-0">Cari Laptop</h1>
-    </div>
-    <div class="col-sm-6">
-      <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Cari Laptop</li>
-      </ol>
-    </div>
+{% block body_class %}search-page{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item active">Search Laptop</li>
+</ol>
+{% endblock breadcrumb %}
+
+{% block page_header %}
+<div class="text-center mb-4">
+  <h1>Search Laptop</h1>
+  <p class="text-light">Set your preferences to find the perfect laptop</p>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3>Laptop Search Configuration</h3>
   </div>
-</div>
-</div>
-{% endblock content_header %}
 
-{% block content_main %}
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-
-          <div class="card-header">
-            <h3 class="card-title">Form Persiapan Cari Laptop</h3>
+  <form method="POST" action="/laptop-selection/results/">
+    {% csrf_token %}
+    <div class="card-body">
+      <div id="notification" class="notification"></div>
+      
+      <!-- Brand Selection -->
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Brand Preference</h5>
+          <p>If you prefer a specific brand, select it below. The system will search for laptops matching your selected brand.</p>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label" for="brand">Preferred Brand</label>
+            <select class="form-control form-select" id="brand" name="brand">
+              <option value="Semua">All Brands</option>
+              {% for brand in brands %}
+                <option value="{{ brand.company }}">{{ brand.company }}</option>
+              {% endfor %}
+            </select>
           </div>
+        </div>
+      </div>
 
-          <form method="POST" action="/laptop-selection/results/">
-            {% csrf_token %}
-          <div class="card-body">
-            <div id="notification" class="alert alert-info" style="display: none;"></div>
-            <div class="row justify-content-center">
-              <div class="col-md-6">
-                <p class="text-cari">Jika Anda menginginkan sebuah brand tertentu maka silahkan pilih nama brand laptop disamping sesuai dengan keinginan. Sistem akan mencari pilihan laptop sesuai dengan brand yang sudah diinputkan.</p>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Brand Favorit Pilihan</label>
-                  <select class="form-control select2bs4" name="brand" style="width: 100%;">
-                    <option value="Semua">Semua Brand</option>
-                    {% for brand in brands  %}
-                      <option value="{{brand.company}}" >{{brand.company}}</option>
-                    {% endfor %}
-                  </select>
+      <hr class="mt-4 mb-4">
+
+      <!-- Priority Selection -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="priority-section drag-drop">
+            <h5>Priority Order</h5>
+            <p class="priority-description">Rank the criteria below according to your preferences (1 = most important, 5 = least important).Drag and drop to reorder your criteria preferences</p>
+            
+            <!-- Priority Order -->
+            <div class="priority-slots">
+              <div class="priority-list" id="priority-list">
+                <div class="priority-item-wrapper" data-priority="1" data-criteria="Price" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">💰</div>
+                    <div class="criteria-name">Price</div>
+                    <div class="criteria-description">Lower is better</div>
+                  </div>
+                  <div class="priority-number" data-priority="1">1</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="2" data-criteria="RAM" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">⚡</div>
+                    <div class="criteria-name">RAM</div>
+                    <div class="criteria-description">Higher = faster processing</div>
+                  </div>
+                  <div class="priority-number" data-priority="2">2</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="3" data-criteria="SSD" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">💾</div>
+                    <div class="criteria-name">SSD</div>
+                    <div class="criteria-description">Higher = faster storage</div>
+                  </div>
+                  <div class="priority-number" data-priority="3">3</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="4" data-criteria="HDD" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">🗄️</div>
+                    <div class="criteria-name">HDD</div>
+                    <div class="criteria-description">Higher = more storage</div>
+                  </div>
+                  <div class="priority-number" data-priority="4">4</div>
+                </div>
+                <div class="priority-item-wrapper" data-priority="5" data-criteria="CPU" draggable="true">
+                  <div class="criteria-content">
+                    <div class="drag-handle">⋮⋮</div>
+                    <div class="criteria-icon">🖥️</div>
+                    <div class="criteria-name">CPU</div>
+                    <div class="criteria-description">Higher = more power</div>
+                  </div>
+                  <div class="priority-number" data-priority="5">5</div>
                 </div>
               </div>
             </div>
-            <div class="dropdown-divider"></div>
-            <div class="row justify-content-center">
-              <div class="col-md-6 text-cari">
-                <p>Kami menyediakan form untuk mengisi ranking untuk tingkat kepentingan. Ranking yang dimaksud disini adalah Anda dapat mengurutkan beberapa kriteria di bawah ini sesuai dengan kebutuhan dan keinginan Anda. <br><br> Contoh: Anda lebih mementingkan harga dibandingkan besar ukuran RAM. Jadi Anda bisa memilih harga sebagai kriteria urutan pertama. Urutan selanjutnya diikuti kepentingan kriteria sesuai keinginan Anda. Namun jika tidak diurutkan default urutannya seperti ini : </p>
-                <ol>
-                  <li>Harga</li>
-                  Semakin kecil nilai semakin baik
-                  <li>RAM</li>
-                  Untuk mempercepat pemrosesan data pada perangkat. Semakin tinggi nilai semakin baik
-                  <li>SSD</li>
-                  Penyimpanan Laptop (lebih baik dari HDD). Semakin tinggi nilai semakin baik
-                  <li>HDD</li>
-                  Penyimpanan Laptop. Semakin tinggi nilai semakin baik
-                  <li>CPU</li>
-                  Mendukung pemrosesan data. Semakin tinggi nilai semakin baik
-                </0l>             
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  {% for criteria in criterias %}
-                    {% if forloop.counter != 6 %}
-                      {% if forloop.counter == 1 %}
-                      <label>Kepentingan {{forloop.counter}}</label>
-                      {% else %}
-                      <label class="m-t-10">Kepentingan {{forloop.counter}}</label>
-                      {% endif %}
-                      <select class="form-control select2bs4" style="width: 100%;" id="priority_{{forloop.counter}}" aria-describedby="priority" name="priority_{{forloop.counter}}">
-                      {% for kriteria in criterias %}
-                        {% if forloop.counter == 1 %}
-                        <option value="empty">{{kriteria}}</option>
-                        {% else %}
-                        <option value="{{kriteria}}">{{kriteria}}</option>
-                        {% endif %}                     
-                      {% endfor %}
-                      </select>
-                      <small id="penting" class="form-text text-muted">Pilih "Default" untuk mereset pilihan</small>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
+            
+            <!-- Hidden inputs for form submission -->
+            <input type="hidden" id="priority_1" name="priority_1" value="Price">
+            <input type="hidden" id="priority_2" name="priority_2" value="RAM">
+            <input type="hidden" id="priority_3" name="priority_3" value="SSD">
+            <input type="hidden" id="priority_4" name="priority_4" value="HDD">
+            <input type="hidden" id="priority_5" name="priority_5" value="CPU">
           </div>
-
-          <div class="card-footer">
-            <button type="submit" class="btn btn-custom" id="cari">Cari Laptop</button>
-            <button type="button" class="btn btn-default float-right" id="reset_penting">Reset Pengaturan</button>
-          </div>
-
-         </form>
-      </div>  
+        </div>
+      </div>
     </div>
 
+    <div class="card-body" style="border-top: 1px solid var(--border-light);">
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-outline" id="reset-btn">Reset Settings</button>
+        <button type="submit" class="btn btn-primary btn-large" id="search-btn">Search Laptop</button>
+      </div>
     </div>
-  </div>
-</section>
-{% endblock content_main %}
+  </form>
+</div>
+{% endblock content %}
 

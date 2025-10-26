@@ -1,146 +1,169 @@
 {% extends "base.html" %}
 {% load laptop_selection_extras %}
 
-{% block content_header %}
-<div class="content-header">
-<div class="container-fluid">
-  <div class="row mb-2">
-    <div class="col-sm-6">
-      <h1 class="m-0">Hasil Penentuan</h1>
-    </div>
-    <div class="col-sm-6">
-      <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active">Hasil Penentuan</li>
-      </ol>
+{% block body_class %}results-page{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="/">Home</a></li>
+  <li class="breadcrumb-item"><a href="/laptop-selection/search/">Search</a></li>
+  <li class="breadcrumb-item active">Results</li>
+</ol>
+{% endblock breadcrumb %}
+
+{% block page_header %}
+<div class="text-center mb-4">
+  <h1>Search Results</h1>
+  <p class="text-light">Top laptop recommendations based on your preferences</p>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<!-- Important Disclaimer -->
+<div class="alert alert-warning" role="alert" style="background: linear-gradient(135deg, #fff3cd, #ffeaa7); border: 2px solid #f39c12; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);">
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <div style="font-size: 2rem;">⚠️</div>
+    <div>
+      <h4 style="color: #8b4513; margin: 0 0 0.5rem 0; font-weight: 700;">Important Disclaimer</h4>
+      <p style="margin: 0; color: #8b4513; font-weight: 500; line-height: 1.5;">
+        <strong>This tool provides recommendations only.</strong> The AHP algorithm analyzes your preferences but may not be 100% accurate. 
+        <strong>Always verify laptop specifications, prices, and availability</strong> from official sources before making any purchase decisions. 
+        Laptop data may be outdated or incorrect.
+      </p>
     </div>
   </div>
 </div>
-</div>
-{% endblock content_header %}
 
-{% block content_main %}
-<section class="content">
-  <div class="container-fluid">
-
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          
-          <div class="card-header">
-            <h3 class="card-title">Hasil Perhitungan</h3>
-          </div>
-
-          <div class="card-body">
-            <div class="row justify-content-center">
-              <div class="col-12">
-                <p>Berikut 5 laptop teratas yang kami rekomendasikan dengan keinginan anda</p>
+<!-- Top Recommendations -->
+<div class="card">
+  <div class="card-header">
+    <h3>Top 5 Laptop Recommendations</h3>
+    <p class="mb-0 text-light">Based on your criteria preferences and AHP analysis</p>
+  </div>
+  <div class="card-body">
+    {% for data in ranking_alternatives %}
+      {% if forloop.counter < 6 %}
+        {% for data2 in ranking_alternatives %}
+          {% if data2.rank == forloop.parentloop.counter %}
+            <div class="ranking-item">
+              <div class="ranking-number">{{ data2.rank }}</div>
+              <div class="ranking-content">
+                <div class="ranking-title">
+                  {{ data2.obj.company }} {{ data2.obj.product }}
+                </div>
+                <div class="ranking-specs">
+                  CPU: {{ data2.obj.cpu }}GHz | RAM: {{ data2.obj.ram }}GB | 
+                  SSD: {{ data2.obj.ssd|convert_memory }} | HDD: {{ data2.obj.hdd|convert_memory }} | 
+                  Price: {{ data2.obj.price|format_rupiah }}
+                </div>
               </div>
-              <table class="table table-bordered table-responsif">
-                <thead>
-                  <tr>
-                    <th>Rank</th>
-                    <th>ID Laptop</th>
-                    <th>Brand</th>
-                    <th>Nama Laptop</th>
-                    <th>CPU</th>
-                    <th>Harga</th>
-                    <th>RAM</th>
-                    <th>SSD</th>
-                    <th>HDD</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for data in ranking_alternatives %}
-                    {% if forloop.counter < 6 %}
-                      {% for data2 in ranking_alternatives %}
-                        {% if data2.rank == forloop.parentloop.counter  %}
-                          <tr>
-                            <td>{{ data2.rank }}</td>
-                            <td>{{ data2.obj.id_laptop }}</td>
-                            <td>{{ data2.obj.company }}</td>
-                            <td>{{ data2.obj.product }}</td>
-                            <td>{{ data2.obj.cpu }}</td>
-                            <td>{{ data2.obj.price }}</td>
-                            <td>{{ data2.obj.ram }}</td>
-                            <td>{{ data2.obj.ssd }}</td>
-                            <td>{{ data2.obj.hdd }}</td>
-                          </tr> 
-                        {% endif %}
-                      {% endfor %} 
-                    {% endif %}
-                  {% endfor %}
-                  <!-- Pakaikan perulangan disini -->
-                </tbody>
-              </table>
+              <div class="ranking-score">{{ data2.score|format_float }}</div>
             </div>
-          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="card-body" style="border-top: 1px solid var(--border-light);">
+    <div class="d-flex justify-content-between">
+      <a href="/laptop-selection/search/" class="btn btn-outline">New Search</a>
+      <button type="button" class="btn btn-accent" id="toggle-calculation">Show Calculation Details</button>
+    </div>
+  </div>
+</div>
 
-          <div class="card-footer">
-            <button type="button" class="btn btn-custom" id="perhitungan">Lihat perhitungan</button>
-          </div>
+<!-- Calculation Details -->
+<div class="card mt-4" id="calculation-details" style="display: none;">
+  <div class="card-header">
+    <h3>AHP Calculation Details</h3>
+    <p class="mb-0">Detailed analysis of the Analytical Hierarchy Process</p>
+  </div>
+  <div class="card-body">
+    <!-- Laptop Reference -->
+    <div class="calculation-section">
+      <h5 class="section-title">Laptop Reference</h5>
+      <div class="laptop-reference">
+        {% for data in alternatives %}
+        <div class="laptop-ref-item">
+          <span class="laptop-ref-number">Laptop {{ forloop.counter }}:</span>
+          <span class="laptop-ref-name">{{ data.obj.company }} {{ data.obj.product }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 
+    <!-- AHP Explanation -->
+    <div class="calculation-section">
+      <h5 class="section-title">What is AHP (Analytical Hierarchy Process)?</h5>
+      <div class="ahp-explanation">
+        <div class="explanation-card">
+          <div class="explanation-icon">🎯</div>
+          <div class="explanation-content">
+            <h6>Multi-Criteria Decision Making</h6>
+            <p>AHP is a structured technique for organizing and analyzing complex decisions. It breaks down a decision into a hierarchy of criteria and alternatives, then uses pairwise comparisons to determine priorities.</p>
+          </div>
+        </div>
+        
+        <div class="explanation-card">
+          <div class="explanation-icon">⚖️</div>
+          <div class="explanation-content">
+            <h6>Pairwise Comparison</h6>
+            <p>Each criterion (Price, RAM, SSD, HDD, CPU) is compared against every other criterion to determine their relative importance. This creates a comparison matrix that calculates priority weights.</p>
+          </div>
+        </div>
+        
+        <div class="explanation-card">
+          <div class="explanation-icon">📊</div>
+          <div class="explanation-content">
+            <h6>Consistency Check</h6>
+            <p>The system calculates Consistency Ratio (CR) to ensure your preferences are logical. CR ≤ 0.1 means your choices are consistent and reliable.</p>
+          </div>
+        </div>
+        
+        <div class="explanation-card">
+          <div class="explanation-icon">🏆</div>
+          <div class="explanation-content">
+            <h6>Final Ranking</h6>
+            <p>Each laptop gets a score by multiplying its performance in each criterion by the criterion's weight. Higher scores indicate better overall matches to your preferences.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container-fluid">
-    <div class="row" style="display:none;" id="detail_perhitungan" tanda='0'>
+    <!-- AHP Hierarchy -->
+    <div class="calculation-section">
+      <h5 class="section-title">AHP Hierarchy</h5>
+      {% include "detail/hierarchy.html" %}
+    </div>
 
-      <div class="col-12">
-        <div class="card">
-          
-          <div class="card-header">
-            <h3 class="card-title">Detail Perhitungan</h3>
-          </div>
-
-          <div class="card-body">
-
-            <div class="row text-center m-b-30">
-              <div class="col-12">
-                <p class="title-hitung">Hierarki AHP</p>
-              </div>
-              
-              {% include "detail/hierarchy.html" %}
-
-            </div>
-
-            <div class="row text-center m-b-30">
-              <div class="col-12">
-                <p class="title-hitung">Penentuan Weights (W) atau priority vector dari kriteria</p>
-              </div>
-              
-              {% include "detail/criteria_cpu.html" %}
-
-              {% include "detail/criteria_price.html" %}
-
-              {% include "detail/criteria_ram.html" %}
-
-              {% include "detail/criteria_ssd.html" %}
-
-              {% include "detail/criteria_hdd.html" %}
-
-              {% include "detail/criteria_criteria.html" %}
-
-            </div>
-
-            <div class="row text-center m-b-30">
-              <div class="col-12">
-                <p class="title-hitung">Perangkingan Tiap Alternatif</p>
-              </div>
-              
-              {% include "detail/ranking.html" %}
-
-            </div>
-
-          </div>
-        </div>    
+    <!-- Criteria Weights -->
+    <div class="calculation-section">
+      <h5 class="section-title">Criteria Weights (Priority Vectors)</h5>
+      
+      <div class="mb-4">
+        {% include "detail/criteria_cpu.html" %}
       </div>
-
+      <div class="mb-4">
+        {% include "detail/criteria_price.html" %}
+      </div>
+      <div class="mb-4">
+        {% include "detail/criteria_ram.html" %}
+      </div>
+      <div class="mb-4">
+        {% include "detail/criteria_ssd.html" %}
+      </div>
+      <div class="mb-4">
+        {% include "detail/criteria_hdd.html" %}
+      </div>
+      <div class="mb-4">
+        {% include "detail/criteria_criteria.html" %}
+      </div>
+    </div>
+    <div class="calculation-section">
+      <h5 class="section-title">Final Alternative Ranking</h5>
+      {% include "detail/ranking.html" %}
     </div>
   </div>
-
-</section>
-{% endblock content_main %}
+</div>
+{% endblock content %}
 

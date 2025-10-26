@@ -1,20 +1,21 @@
 {% load laptop_selection_extras %}
-<h5>Kriteria RAM</h5>
+<h5>RAM Criteria</h5>
 <div>
-<p class="text-left" style="font-weight:bold;">Tingkat Kepentingan lalu Pairwaise Comparison</p>
-<table class="table table-bordered table-size table-responsif">
+<p class="text-left" style="font-weight:bold;">Importance Level and Pairwise Comparison</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>RAM</th>
       {% for data in alternatives %}
-      <th>{{ data.obj.product }}</th>
+      <th>Laptop {{ forloop.counter }}</th>
       {% endfor %}
     </tr>
   </thead>
   <tbody>
     {% for data in alternatives %}
     <tr>
-      <td>{{ data.obj.product }}</td>
+      <td>Laptop {{ forloop.counter }}</td>
 
       {% for data2 in data.ram.initial %}
         <td>{{ data2 }}</td>
@@ -23,14 +24,16 @@
     </tr>
     {% endfor %}
   </tbody>
-</table>
-<p class="text-left" style="font-weight:bold;">Normalisasi Matriks</p>
-<table class="table table-bordered table-size table-responsif">
+  </table>
+  </div>
+<p class="text-left" style="font-weight:bold;">Normalization Matrix</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>RAM</th>
       {% for data in alternatives %}
-      <th>{{ data.obj.product }}</th>
+      <th>Laptop {{ forloop.counter }}</th>
       {% endfor %}
       <th>Weights (W)</th>
     </tr>
@@ -38,7 +41,7 @@
   <tbody>
     {% for data in alternatives %}
     <tr>
-      <td>{{ data.obj.product }}</td>
+      <td>Laptop {{ forloop.counter }}</td>
 
       {% for data2 in data.ram.normalized %}
         <td>{{ data2|format_float }}</td>
@@ -48,14 +51,16 @@
     </tr>
     {% endfor %}
   </tbody>
-</table>
-<p class="text-left" style="font-weight:bold;">Matriks Perkalian Bobot</p>
-<table class="table table-bordered table-size table-responsif">
+  </table>
+  </div>
+<p class="text-left" style="font-weight:bold;">Weighted Matrix</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>RAM</th>
       {% for data in alternatives %}
-      <th>{{ data.obj.product }}</th>
+      <th>Laptop {{ forloop.counter }}</th>
       {% endfor %}
       <th>WSV</th>
       <th>CV</th>
@@ -64,7 +69,7 @@
   <tbody>
     {% for data in alternatives %}
     <tr>
-      <td>{{ data.obj.product }}</td>
+      <td>Laptop {{ forloop.counter }}</td>
 
       {% for data2 in data.ram.weighted %}
         <td>{{ data2|format_float }}</td>
@@ -75,14 +80,16 @@
     </tr>
     {% endfor %}
   </tbody>
-</table>
-<p class="text-left" style="font-weight:bold;">Kesimpulan untuk RAM</p>
-<table class="table table-bordered table-size table-responsif">
+  </table>
+  </div>
+<p class="text-left" style="font-weight:bold;">Conclusion for RAM</p>
+  <div class="table-responsive">
+  <table class="table table-bordered table-size table-responsif">
   <thead>
     <tr>
       <th>RAM</th>
       {% for data in alternatives %}
-      <th>{{ data.obj.product }}</th>
+      <th>Laptop {{ forloop.counter }}</th>
       {% endfor %}
       <th>Weight (W)</th>
     </tr>
@@ -90,7 +97,7 @@
   <tbody>
     {% for data in alternatives %}
     <tr>
-      <td>{{ data.obj.product }}</td>
+      <td>Laptop {{ forloop.counter }}</td>
 
       {% for data2 in data.ram.initial %}
         <td>{{ data2|format_float }}</td>
@@ -100,21 +107,24 @@
     </tr>
     {% endfor %}
   </tbody>
-</table>
- <table class="table table-bordered">
-  <tbody>
-    <tr>
-      <td>Lambda Max</td>
-      <td>{{ alternatives.0.ram.lambda_max }}</td>
-    </tr>
-    <tr>
-      <td>Consistency Index (CI)</td>
-      <td>{{ alternatives.0.ram.ci|format_float_precise }}</td>
-    </tr>
-    <tr>
-      <td>Consistency Ration (CR)</td>
-      <td>{{ alternatives.0.ram.cr|format_float_precise }}</td>
-    </tr>
-  </tbody>
-</table>
+  </table>
+  </div>
+  <div class="table-responsive">
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Lambda Max</td>
+        <td>{{ alternatives.0.ram.lambda_max }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Index (CI)</td>
+        <td>{{ alternatives.0.ram.ci|format_float_precise }}</td>
+      </tr>
+      <tr>
+        <td>Consistency Ration (CR)</td>
+        <td>{{ alternatives.0.ram.cr|format_float_precise }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
 </div>

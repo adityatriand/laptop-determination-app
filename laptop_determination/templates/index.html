@@ -1,33 +1,68 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block content_header %}
-<div class="content-header">
-<div class="container-fluid">
-  <div class="row mb-2">
-    <div class="col-sm-6">
-      <h1 class="m-0">Home</h1>
-    </div>
-  </div>
-</div>
-</div>
-{% endblock content_header %}
+{% block body_class %}home-page{% endblock %}
 
-{% block content_main %}
-<section class="content">
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-sm-6 col-md-6 text-center">
-        <h1 class="title-home">
-          Temukan Laptop dengan Spesifikasi yang Cocok Untukmu!
-        </h1>
-        <a type="button" class="btn btn-custom btn-med" href="/laptop-selection/search/">Cari Laptop</a>
+{% block page_header %}
+<div class="text-center mb-4">
+  <h1>Laptop Selection System</h1>
+  <p class="text-light">Find the perfect laptop using AHP Decision Support</p>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3>Welcome to Laptop Selection System</h3>
+  </div>
+  <div class="card-body">
+    <div class="d-flex align-items-center">
+      <div class="flex-grow-1">
+        <h4>About This System</h4>
+        <p>
+          This system helps you choose the best laptop based on your preferences using the Analytical Hierarchy Process (AHP) method. 
+          You can set priorities for different criteria like CPU, RAM, Price, SSD, and HDD to find the most suitable laptop for your needs.
+        </p>
+        <div class="mt-4">
+          <a href="/laptop-selection/search/" class="btn btn-primary btn-large">Start Searching</a>
+          <a href="/laptop-selection/alternatives/" class="btn btn-outline btn-large">View All Laptops</a>
+        </div>
       </div>
-      <div class="col-sm-6 col-md-6 order-sm-last order-sm-last order-first text-center">
-        <img class="img-hp" src="{% static 'img/icon-laptop-logo.png' %}" alt="" width="350">
+      <div class="ms-4">
+        <img src="{% static 'img/icon-laptop-logo.png' %}" alt="Laptop" style="max-width: 300px; height: auto;">
       </div>
     </div>
   </div>
-</section>
-{% endblock content_main %}
+</div>
+
+<div class="process-cards">
+  <div class="process-card">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="priority-number">1</div>
+        <h5>Set Priorities</h5>
+        <p>Choose your criteria priorities from 1-5 based on importance</p>
+      </div>
+    </div>
+  </div>
+  <div class="process-card">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="priority-number">2</div>
+        <h5>AHP Analysis</h5>
+        <p>Our system analyzes your preferences using AHP algorithm</p>
+      </div>
+    </div>
+  </div>
+  <div class="process-card">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="priority-number">3</div>
+        <h5>Get Results</h5>
+        <p>Receive ranked laptop recommendations with detailed analysis</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
 

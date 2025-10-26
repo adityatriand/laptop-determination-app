@@ -1,20 +1,21 @@
 {% load laptop_selection_extras %}
-<h5>Kriteria Harga</h5>
+<h5>Price Criteria</h5>
 <div>
-  <p class="text-left" style="font-weight:bold;">Tingkat Kepentingan lalu Pairwaise Comparison</p>
+  <p class="text-left" style="font-weight:bold;">Importance Level and Pairwise Comparison</p>
+  <div class="table-responsive">
   <table class="table table-bordered table-size table-responsif">
     <thead>
       <tr>
         <th>Harga</th>
         {% for data in alternatives %}
-        <th>{{ data.obj.product }}</th>
+        <th>Laptop {{ forloop.counter }}</th>
         {% endfor %}
       </tr>
     </thead>
     <tbody>
       {% for data in alternatives %}
       <tr>
-        <td>{{ data.obj.product }}</td>
+        <td>Laptop {{ forloop.counter }}</td>
 
         {% for data2 in data.price.initial %}
           <td>{{ data2 }}</td>
@@ -24,13 +25,15 @@
       {% endfor %}
     </tbody>
   </table>
-  <p class="text-left" style="font-weight:bold;">Normalisasi Matriks</p>
+  </div>
+  <p class="text-left" style="font-weight:bold;">Normalization Matrix</p>
+  <div class="table-responsive">
   <table class="table table-bordered table-size table-responsif">
     <thead>
       <tr>
         <th>Harga</th>
         {% for data in alternatives %}
-        <th>{{ data.obj.product }}</th>
+        <th>Laptop {{ forloop.counter }}</th>
         {% endfor %}
         <th>Weights (W)</th>
       </tr>
@@ -38,7 +41,7 @@
     <tbody>
       {% for data in alternatives %}
       <tr>
-        <td>{{ data.obj.product }}</td>
+        <td>Laptop {{ forloop.counter }}</td>
 
         {% for data2 in data.price.normalized %}
           <td>{{ data2|format_float }}</td>
@@ -49,13 +52,15 @@
       {% endfor %}
     </tbody>
   </table>
-  <p class="text-left" style="font-weight:bold;">Matriks Perkalian Bobot</p>
+  </div>
+  <p class="text-left" style="font-weight:bold;">Weighted Matrix</p>
+  <div class="table-responsive">
   <table class="table table-bordered table-size table-responsif">
     <thead>
       <tr>
         <th>Harga</th>
         {% for data in alternatives %}
-        <th>{{ data.obj.product }}</th>
+        <th>Laptop {{ forloop.counter }}</th>
         {% endfor %}
         <th>WSV</th>
         <th>CV</th>
@@ -64,7 +69,7 @@
     <tbody>
       {% for data in alternatives %}
       <tr>
-        <td>{{ data.obj.product }}</td>
+        <td>Laptop {{ forloop.counter }}</td>
 
         {% for data2 in data.price.weighted %}
           <td>{{ data2|format_float }}</td>
@@ -76,13 +81,15 @@
       {% endfor %}
     </tbody>
   </table>
-  <p class="text-left" style="font-weight:bold;">Kesimpulan untuk Harga</p>
+  </div>
+  <p class="text-left" style="font-weight:bold;">Conclusion for Price</p>
+  <div class="table-responsive">
   <table class="table table-bordered table-size table-responsif">
     <thead>
       <tr>
         <th>Harga</th>
         {% for data in alternatives %}
-        <th>{{ data.obj.product }}</th>
+        <th>Laptop {{ forloop.counter }}</th>
         {% endfor %}
         <th>Weight (W)</th>
       </tr>
@@ -90,7 +97,7 @@
     <tbody>
       {% for data in alternatives %}
       <tr>
-        <td>{{ data.obj.product }}</td>
+        <td>Laptop {{ forloop.counter }}</td>
 
         {% for data2 in data.price.initial %}
           <td>{{ data2|format_float }}</td>
@@ -101,6 +108,8 @@
       {% endfor %}
     </tbody>
   </table>
+  </div>
+  <div class="table-responsive">
   <table class="table table-bordered">
     <tbody>
       <tr>
@@ -117,4 +126,5 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </div>

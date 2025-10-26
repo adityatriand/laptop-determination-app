@@ -62,5 +62,70 @@ def format_weight(data, index):
 
 @register.filter
 def convert_memory(size):
-	return int(size*1000)
+	"""Convert memory size to proper format (GB/TB)"""
+	try:
+		size = float(size)
+		if size == 0:
+			return "0 GB"
+		elif size < 1024:
+			return f"{int(size)} GB"
+		else:
+			return f"{size/1024:.1f} TB"
+	except (ValueError, TypeError):
+		return "0 GB"
+
+@register.filter
+def format_rupiah(value):
+    """Format number as Indonesian Rupiah currency"""
+    try:
+        # Convert to float first
+        num = float(value)
+        
+        # Format with thousand separators
+        formatted = f"{num:,.0f}"
+        
+        # Add Rp prefix
+        return f"Rp {formatted}"
+    except (ValueError, TypeError):
+        return "Rp 0"
+
+@register.filter
+def laptop_alias(value):
+    """Generate a short alias for laptop names"""
+    if not value:
+        return ""
+    
+    # Convert to string and clean up
+    name = str(value).strip()
+    
+    # If already short enough, return as is
+    if len(name) <= 25:
+        return name
+    
+    # Extract key components
+    parts = name.split()
+    if len(parts) < 2:
+        return name[:25] + "..." if len(name) > 25 else name
+    
+    # Try to create meaningful alias
+    brand = parts[0]
+    
+    # Look for model indicators
+    model_indicators = ['IdeaPad', 'ThinkPad', 'Aspire', 'TravelMate', 'MacBook', 'Inspiron', 'Vostro', 'Latitude', 'Precision', 'EliteBook', 'ProBook', 'Pavilion', 'Envy', 'Spectre', 'Omen', 'ProBook', 'EliteBook', 'ZBook', 'ProBook', 'EliteBook', 'ZBook', 'ProBook', 'EliteBook', 'ZBook']
+    
+    model = ""
+    for indicator in model_indicators:
+        if indicator in name:
+            model = indicator
+            break
+    
+    if model:
+        # Find model number/identifier
+        model_start = name.find(model)
+        model_part = name[model_start:model_start + 20]  # Take first 20 chars of model part
+        return f"{brand} {model_part}"
+    else:
+        # Fallback: brand + first few words
+        remaining = " ".join(parts[1:3])  # Take next 2 words
+        return f"{brand} {remaining[:15]}" if remaining else brand
 
